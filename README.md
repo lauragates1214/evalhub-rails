@@ -1,72 +1,66 @@
 # EvalHub
 
-**A simple async feedback collection platform for academic demonstration**
+**University Course Evaluation Platform**
 
-EvalHub is a clean, academic-focused web application that demonstrates fundamental full-stack development concepts. Built with Ruby on Rails for the backend API and React for the frontend interface, it provides basic async feedback collection functionality suitable for CS50x submission.
+EvalHub is a full-stack web application that enables educational institutions to collect student feedback through asynchronous course evaluations. Built with Ruby on Rails for the backend API and React for the frontend interface, it provides a streamlined solution for gathering and analyzing student answers with minimal friction.
 
-## 🚀 Features
+## Features
 
-### Core Functionality
-- **Simple Evaluation Creation**: Instructors can create feedback evaluations with basic details
-- **Anonymous Participation**: Students join evaluations using access codes (no authentication required)
-- **Basic Question Types**: Support for text responses and multiple choice questions only
-- **Async Response Collection**: Students submit responses at their own pace
-- **Simple Response Viewing**: Instructors can view all submitted responses
-- **QR Code Access**: Evaluations accessible via QR codes for easy mobile access
+### For Instructors
+- **Course Evaluation Creation**: Set up feedback collection for courses and workshops
+- **Question Management**: Create and organize evaluation questions (text answers, multiple choice, rating scales)
+- **QR Code Access**: Automatically generate QR codes for easy student access without signup requirements
+- **Answer Viewing**: View and analyze submitted student feedback in real-time
+- **Data Export**: Export answer data to CSV format for further analysis
+- **Anonymous Collection**: Students participate without creating accounts, increasing response rates
+
+### For Students  
+- **Frictionless Access**: Join evaluations via QR code scanning with no downloads or account creation required
+- **Anonymous Participation**: Provide honest feedback through UUID-based anonymous access
+- **Multiple Question Types**: Respond to text questions, multiple choice selections, and rating scales
+- **Mobile Optimized**: Complete evaluations on any device through responsive web interface
+- **Asynchronous Answer**: Complete evaluations at your own pace without time pressure
 
 ### Technical Features
-- **Clean Architecture**: Institution → Evaluation → Question → Answer structure
-- **RESTful API**: Simple Rails API with JSON responses
-- **UUID Session Tokens**: Basic session management for temporary user identification
-- **Responsive Design**: Mobile-friendly interface using React and SCSS
-- **SQLite Database**: Simple database setup for development and academic use
-- **Centralized Styling**: SCSS architecture with design tokens and accessible colors
-- **Dynamic Resource Handling**: Advanced patterns for join tables and resource hierarchies
+- **RESTful API**: Clean, documented API endpoints following REST conventions
+- **UUID Authentication**: Secure anonymous access through unique session tokens
+- **PostgreSQL Database**: Robust relational database supporting complex queries and data integrity
+- **Responsive Design**: Mobile-first CSS ensuring accessibility across all devices
+- **Error Handling**: Comprehensive error handling with user-friendly feedback messages
+- **CORS Support**: Properly configured for cross-origin requests in development and production
 
-## 🏗️ Architecture
+## Architecture
 
-EvalHub follows a modern full-stack architecture with centralized backend patterns:
+EvalHub follows a modern full-stack architecture with clear separation of concerns, designed specifically for educational feedback collection:
 
-### Backend (Ruby on Rails 6.1)
+### Backend (Ruby on Rails 7.0)
 - **API-only Rails application** serving JSON responses
-- **SQLite3 database** for simplicity
-- **Advanced nested routing** for institutions/evaluations/questions with join table support
-- **Comprehensive validations** for data integrity
-- **Session-based authentication** with UUID tokens
-- **Rails Concerns**: ErrorHandler, Authenticatable, ResourceFindable for cross-cutting functionality
-- **Dynamic Resource Finding**: Runtime method generation for flexible resource access
-- **Join Table Configuration**: Centralized handling for many-to-many relationships
-- **Resource Hierarchy System**: Automated parent-child relationship management
-- **Environment-Specific Seeding**: Development, test, and production data management
+- **PostgreSQL database** for production-ready data persistence
+- **Nested resource routing** providing logical API organization
+- **Service objects** for business logic abstraction and reusability
+- **UUID-based authentication** enabling anonymous student participation
 
 ### Frontend (React 18)
-- **Functional components** with React hooks
-- **Centralized API Services**: Axios-based service layer with error handling
-- **Component-based routing** for instructor and student views
-- **SCSS Design System**: Centralized variables, accessible brand colors (WCAG AA compliant)
-- **Mobile responsive** design with semantic color naming
-- **Environment Configuration**: Build-time environment variable management
+- **Component-based architecture** with functional components and React hooks
+- **Axios integration** for API communication with automatic token management
+- **React Router** for seamless client-side navigation
+- **SCSS styling system** with modular, maintainable stylesheets
+- **Progressive Web App** capabilities for enhanced mobile experience
 
-### Data Flow
-1. **Institution**: Contains evaluations and questions
-2. **Evaluation**: Has access code, contains questions via join tables, collects answers
-3. **Question**: Text, multiple choice, or composite question types
-4. **EvaluationQuestion**: Join table linking evaluations to questions
-5. **Answer**: User responses linked to evaluation questions
+### Key Components
+1. **Institution Management**: Multi-tenant architecture supporting multiple educational institutions
+2. **Evaluation Lifecycle**: Create, configure, and manage course evaluation sessions
+3. **Question System**: Flexible question creation with multiple answer types
+4. **Anonymous Access**: QR code-based student access without registration barriers
+5. **Answer Collection**: Efficient asynchronous feedback submission and storage
 
-### Advanced Backend Patterns
-- **Resource Hierarchy**: Automatic parent validation and parameter injection
-- **Join Table Resources**: Special handling for composite key operations (CRUD)
-- **Dynamic Method Generation**: Runtime creation of finder methods based on resource relationships
-- **Test Helpers**: Automated creation of complex resource hierarchies in tests
-
-## 📋 Requirements
+## Requirements
 
 ### System Requirements
 - **Ruby**: 3.0.0 or higher
-- **Node.js**: 14.0.0 or higher  
-- **npm**: 6.0.0 or higher
-- **SQLite3**: 3.x
+- **Node.js**: 16.0.0 or higher  
+- **npm**: 8.0.0 or higher
+- **PostgreSQL**: 12.0 or higher
 - **Git**: For version control
 
 ### Development Environment
@@ -74,7 +68,7 @@ EvalHub follows a modern full-stack architecture with centralized backend patter
 - Terminal/Command line access
 - Web browser (Chrome, Firefox, Safari, Edge)
 
-## 🛠️ Installation
+## Installation
 
 ### Backend Setup
 
@@ -86,14 +80,14 @@ EvalHub follows a modern full-stack architecture with centralized backend patter
 
 2. **Install Ruby dependencies**
    ```bash
-   bundle install --path vendor/bundle
+   bundle install
    ```
 
 3. **Database setup**
    ```bash
    rails db:create
    rails db:migrate
-   rails db:seed  # Loads environment-specific data
+   rails db:seed  # Optional: Load sample data
    ```
 
 4. **Start the Rails server**
@@ -107,7 +101,7 @@ The backend API will be available at `http://localhost:3000`
 
 1. **Navigate to frontend directory**
    ```bash
-   cd evalhub-django/frontend
+   cd ../frontend
    ```
 
 2. **Install Node.js dependencies**
@@ -129,6 +123,7 @@ Create a `.env` file in the backend directory:
 FRONTEND_URL=http://localhost:3001
 RAILS_ENV=development
 SECRET_KEY_BASE=your-secret-key-here
+DATABASE_URL=postgresql://localhost/evalhub_development
 ```
 
 Create a `.env` file in the frontend directory:
@@ -136,18 +131,19 @@ Create a `.env` file in the frontend directory:
 REACT_APP_API_URL=http://localhost:3000
 ```
 
-## 📚 API Documentation
+## API Documentation
 
 ### Authentication
-The API uses session-based authentication with UUID tokens. Users must authenticate to access protected endpoints.
+The API uses UUID-based session tokens for anonymous access. No traditional user authentication required for students.
 
-**Authenticate User**
+**Join Evaluation (Anonymous)**
 ```
-POST /api/institutions/:institution_id/users/authenticate
+POST /api/evaluations/:id/join
 Content-Type: application/json
 
-{
-  "name": "User Name"
+Response: {
+  "session_token": "uuid-token-here",
+  "evaluation": {...}
 }
 ```
 
@@ -157,19 +153,14 @@ Content-Type: application/json
 GET /api/institutions
 ```
 
-**Get Institution Details**
-```
-GET /api/institutions/:id
-```
-
 **Create Institution**
 ```
 POST /api/institutions
 Content-Type: application/json
 
 {
-  "name": "Institution Name",
-  "description": "Institution description"
+  "name": "University Name",
+  "location": "City, Country"
 }
 ```
 
@@ -185,14 +176,9 @@ POST /api/institutions/:institution_id/evaluations
 Content-Type: application/json
 
 {
-  "name": "Evaluation Name",
-  "description": "Evaluation description"
+  "name": "Course Evaluation",
+  "date": "2025-08-25"
 }
-```
-
-**Join Evaluation**
-```
-GET /api/institutions/:institution_id/evaluations/:id/join?code=ACCESS_CODE
 ```
 
 ### Questions
@@ -207,57 +193,44 @@ POST /api/institutions/:institution_id/questions
 Content-Type: application/json
 
 {
-  "question_text": "How would you rate this evaluation?",
-  "question_type": "multiple_choice_single",
-  "multiple_choice_options": ["Excellent", "Good", "Fair", "Poor"]
+  "question_text": "How would you rate this course?",
+  "question_type": "rating_scale"
 }
 ```
 
-### Evaluation Questions (Join Table)
-**Add Question to Evaluation**
+### Answers
+**Submit Answer**
 ```
-POST /api/institutions/:institution_id/evaluations/:evaluation_id/questions
+POST /api/evaluations/:evaluation_id/questions/:question_id/answers
 Content-Type: application/json
+Authorization: Bearer <session_token>
 
 {
-  "question_id": 123
+  "answer_text": "Excellent course content and delivery"
 }
 ```
 
-### Responses
-**Submit Responses**
-```
-POST /api/institutions/:institution_id/evaluations/:evaluation_id/answers/bulk_create
-Content-Type: application/json
-
-{
-  "answers": [
-    {
-      "evaluation_question_id": 1,
-      "answer_text": "Great evaluation!"
-    }
-  ]
-}
-```
-
-## 🎯 Usage Guide
+## Usage Guide
 
 ### For Instructors
 
-1. **Create Evaluation**: Use the dashboard to create a new feedback evaluation
-2. **Add Questions**: Create simple text or multiple choice questions
-3. **Link Questions**: Associate questions with evaluations via the join table system
-4. **Share Access**: Give students the access code or QR code URL
-5. **View Responses**: Check submitted responses in real-time
+1. **Create Institution**: Set up your educational institution in the system
+2. **Build Question Bank**: Create reusable questions for different course types
+3. **Create Evaluation**: Set up a new course evaluation session
+4. **Add Questions**: Select questions from your bank to include in the evaluation
+5. **Generate QR Code**: Use built-in QR code generation for student access
+6. **Collect Answers**: Students respond asynchronously at their own pace
+7. **Review Feedback**: View submitted answer and export data for analysis
 
 ### For Students
 
-1. **Join Evaluation**: Visit the URL or scan QR code and enter access code
-2. **Provide Name**: Enter your name (no password required)
-3. **Answer Questions**: Complete the feedback form
-4. **Submit**: Submit your responses when finished
+1. **Scan QR Code**: Access the evaluation using your mobile device camera
+2. **Anonymous Access**: Join the evaluation without creating an account
+3. **Complete Questions**: Progress through evaluation questions thoughtfully
+4. **Submit Feedback**: Submit your answers when ready
+5. **Confirmation**: Receive confirmation of successful submission
 
-## 🧪 Testing
+## Testing
 
 ### Backend Testing
 ```bash
@@ -265,118 +238,51 @@ cd backend
 bundle exec rspec
 ```
 
-The test suite includes:
-- **Model Tests**: Basic validations and associations
-- **API Endpoint Tests**: Request/response testing
-- **Resource Hierarchy Helper**: Automated creation of complex test data
+## Academic Context
 
-### Frontend Testing
-```bash
-cd frontend
-npm test
-```
+EvalHub addresses the persistent challenge of low response rates in university course evaluations. Traditional evaluation methods often suffer from poor participation due to complex access requirements, lengthy forms, and timing issues. By implementing QR code-based anonymous access and mobile-optimized interfaces, EvalHub removes common barriers to student participation.
 
-### Integration Testing
-Run both backend and frontend servers, then navigate to the application to test end-to-end functionality.
+The platform's focus on asynchronous collection allows students to provide thoughtful, considered feedback rather than rushed answers during class time. This approach has been shown to improve both answer quality and participation rates in educational settings.
 
-## 🎨 Design System
+## Design Decisions
 
-### Brand Colors (WCAG AA Compliant)
-- **Forest Green**: `#2D5A27` - Primary brand color
-- **Sage Green**: `#4A7C59` - Secondary actions
-- **Coral**: `#C65D47` - Accent and warnings  
-- **Amber**: `#D4A574` - Highlights and success states
+**Centralized Architecture with Template Method Pattern**: Rather than repeating validation logic across controllers, I implemented a centralized approach using Rails concerns. The ResourceFindable concern uses the template method pattern to handle nested resource validation - each controller defines its resource type, and the concern dynamically generates the appropriate finder methods.
 
-### SCSS Architecture
-- **Variables**: Centralized design tokens in `_variables.scss`
-- **Components**: Modular component styles
-- **Utilities**: Helper classes for common patterns
-- **Responsive**: Mobile-first design approach
+**Recursive Resource Validation**: For complex nested routes like `/institutions/1/evaluations/2/questions/3/answers/4`, the system automatically validates the entire resource chain recursively. This was my architectural choice to prevent security issues where users might access resources they shouldn't by manipulating URLs.
 
-## 🚢 Deployment
+**Configuration-Driven Resource Hierarchy**: Instead of hard-coding parent-child relationships throughout the codebase, I centralized these definitions in Rails initializers. This makes adding new resource types simple - just update the configuration and the existing validation patterns automatically apply.
 
-### Production Setup
+**Dynamic Method Generation**: The ResourceFindable concern uses metaprogramming to generate finder methods at runtime based on the resource configuration. This eliminates code duplication while maintaining type safety and clear error messages.
 
-1. **Environment Variables**: Configure production environment variables
-2. **Database**: Set up production database (PostgreSQL recommended)
-3. **Asset Compilation**: Build frontend assets for production
-4. **Server Configuration**: Configure web server (Nginx, Apache)
-5. **SSL Certificate**: Set up HTTPS for secure communication
+**Template Method for Controllers**: Controllers follow a consistent pattern where common functionality (authentication, validation, error handling) is defined in base classes, while specific resource logic is implemented in child controllers. This creates maintainable, predictable code structure.
 
-### Environment-Specific Seeds
-```bash
-# Development - comprehensive test data
-RAILS_ENV=development rails db:seed
+**Anonymous Authentication**: The system uses UUID-based session tokens rather than traditional user accounts. This design choice was made to eliminate signup friction while maintaining answer integrity through unique token validation.
 
-# Production - minimal essential data only
-RAILS_ENV=production rails db:seed
+**Asynchronous Collection**: Unlike real-time polling systems, EvalHub focuses on post-class evaluation collection. This allows for more reflective answers and accommodates students' varying schedules and preferences.
 
-# Test - minimal data for test consistency
-RAILS_ENV=test rails db:seed
-```
+**Mobile-First Design**: Given that students primarily access evaluations through mobile devices via QR codes, the interface was designed with mobile usability as the primary consideration, with desktop access as a secondary use case.
 
-### Docker Deployment (Optional)
+**Institution-Centric Architecture**: The multi-tenant design allows multiple educational institutions to use the platform while maintaining complete data isolation and customization capabilities.
 
-A `docker-compose.yml` file can be created to containerize both applications:
-```yaml
-version: '3.8'
-services:
-  backend:
-    build: ./backend
-    ports:
-      - "3000:3000"
-    environment:
-      - RAILS_ENV=production
-  
-  frontend:
-    build: ./frontend
-    ports:
-      - "3001:3001"
-    depends_on:
-      - backend
-```
+## AI Assistance Acknowledgment
 
-## 🏛️ Architecture Highlights
+This project was developed with assistance from AI tools as development accelerators:
 
-### Centralized Backend Patterns
-1. **Join Table Resources**: Automatic handling of many-to-many relationships with composite key support
-2. **Resource Hierarchy**: Parent-child relationship management with recursive validation
-3. **Dynamic Resource Finding**: Runtime method generation for flexible resource access patterns
-4. **Test Infrastructure**: Comprehensive helpers for complex resource creation in tests
+**Architecture & Strategy:**
+- **ChatGPT** - Rails project structure recommendations and model relationship design
+- **Claude** - Technical architecture planning and database design guidance
 
-### Frontend Centralization
-1. **API Services**: Centralized Axios configuration with error handling
-2. **Component Institution**: Logical separation of instructor/student components
-3. **Design System**: Consistent styling with accessible color palette
-4. **Environment Management**: Build-time configuration for different environments
+**Code Development:**
+- **ChatGPT** - Generated initial code templates for models, controllers, and routing structure
+- **Claude** - Iterative development assistance for authentication patterns and API design
 
-## 🤝 Contributing
+**Documentation:**
+- **Claude** - Initial README structure and API documentation templates
+- Content customized independently
 
-1. **Fork the repository**
-2. **Create feature branch** (`git checkout -b feature/new-feature`)
-3. **Make changes** following the project's coding standards
-4. **Add tests** for new functionality
-5. **Commit changes** (`git commit -am 'Add new feature'`)
-6. **Push to branch** (`git push origin feature/new-feature`)
-7. **Create Pull Request** with detailed description
-
-### Code Style Guidelines
-- **Ruby**: Follow RuboCop recommendations
-- **JavaScript**: Follow Prettier and ESLint configurations
-- **SCSS**: Use BEM methodology for CSS class naming
-- **Commits**: Use conventional commit messages
-
-## 📄 License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## 🆘 Support
-
-For questions, issues, or support:
-- **Documentation**: Check this README and inline code documentation
-- **Issues**: Report bugs and feature requests via GitHub Issues
-- **Email**: Contact the development team at [support@evalhub.com]
+**Core Design Philosophy:**
+All architectural decisions, including the anonymous access system, asynchronous collection approach, and university-focused positioning, were independently conceived. The choice to use UUID authentication, the database schema design, and the mobile-first interface were strategic decisions made to address specific challenges in educational feedback collection. AI tools served as development accelerators and provided technical implementation guidance, but did not drive the fundamental design strategy and choices, or the academic focus of the platform.
 
 ---
 
-**EvalHub** - A modern, accessible async feedback platform demonstrating advanced full-stack development patterns.
+**EvalHub** - Empowering instructors to collect meaningful student feedback efficiently and effectively.
