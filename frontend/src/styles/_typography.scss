@@ -1,0 +1,188 @@
+@import 'variables';
+
+// Font families
+$font-headers: 'Roboto Slab', serif;        // Slab serif for headers
+$font-body: 'Source Sans Pro', sans-serif;  // Clean sans-serif for body text
+
+// Font sizes (using rem for better accessibility)
+$font-size-xs: 0.75rem;    // 12px
+$font-size-sm: 0.875rem;   // 14px
+$font-size-base: 1rem;     // 16px (default)
+$font-size-lg: 1.125rem;   // 18px
+$font-size-xl: 1.25rem;    // 20px
+$font-size-2xl: 1.5rem;    // 24px
+$font-size-3xl: 2rem;      // 32px
+$font-size-4xl: 2.5rem;    // 40px
+
+// Font weights
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// Line heights for better readability
+$line-height-tight: 1.25;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.75;
+
+// Base typography
+body {
+  font-family: $font-body;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-normal;
+  color: $text-primary;
+  background-color: $background-primary;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Headers using slab serif font
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-headers !important;
+  font-weight: $font-weight-bold !important;
+  line-height: $line-height-tight;
+  color: $text-primary;
+  margin-top: 0;
+  margin-bottom: $spacing-md;
+}
+
+h1 {
+  font-size: $font-size-4xl;
+  font-weight: $font-weight-bold;
+  
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-3xl;
+  }
+}
+
+h2 {
+  font-size: $font-size-3xl;
+  
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-2xl;
+  }
+}
+
+h3 {
+  font-size: $font-size-2xl;
+  
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-xl;
+  }
+}
+
+h4 {
+  font-size: $font-size-xl;
+}
+
+h5 {
+  font-size: $font-size-lg;
+}
+
+h6 {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+}
+
+// Body text
+p {
+  font-family: $font-body;
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
+  margin-top: 0;
+  margin-bottom: $spacing-md;
+  color: $text-primary;
+}
+
+// Links
+a {
+  color: $accent;
+  text-decoration: none;
+  transition: color $transition-fast;
+  
+  &:hover {
+    color: $text-accent-light;
+    text-decoration: underline;
+  }
+  
+  &:focus {
+    outline: 2px solid $accent;
+    outline-offset: 2px;
+    border-radius: $border-radius-sm;
+  }
+}
+
+// Lists
+ul, ol {
+  margin: 0 0 $spacing-md 0;
+  padding-left: $spacing-lg;
+}
+
+li {
+  margin-bottom: $spacing-xs;
+}
+
+// Text utility classes
+.text-xs { font-size: $font-size-xs; }
+.text-sm { font-size: $font-size-sm; }
+.text-base { font-size: $font-size-base; }
+.text-lg { font-size: $font-size-lg; }
+.text-xl { font-size: $font-size-xl; }
+.text-2xl { font-size: $font-size-2xl; }
+.text-3xl { font-size: $font-size-3xl; }
+
+.text-normal { font-weight: $font-weight-normal; }
+.text-medium { font-weight: $font-weight-medium; }
+.text-semibold { font-weight: $font-weight-semibold; }
+.text-bold { font-weight: $font-weight-bold; }
+
+.text-primary { color: $text-primary; }
+.text-secondary { color: $text-secondary; }
+.text-muted { color: $text-muted; }
+.text-inverse { color: $text-inverse; }
+.text-accent { color: $text-accent; }
+.text-success { color: $text-success; }
+.text-warning { color: $text-warning; }
+.text-error { color: $text-error; }
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+// Special typography components
+.lead {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-relaxed;
+  color: $text-secondary;
+}
+
+.small, small {
+  font-size: $font-size-sm;
+  color: $text-muted;
+}
+
+code, pre {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: $font-size-sm;
+  background: $background-tertiary;
+  border-radius: $border-radius-sm;
+  padding: $spacing-xs $spacing-sm;
+  color: $text-accent;
+}
+
+pre {
+  padding: $spacing-md;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+// Accessibility improvements
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

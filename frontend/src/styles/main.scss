@@ -1,0 +1,23 @@
+// EvalHub Main Styles - Centralized SCSS Approach
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&family=Roboto+Slab:wght@400;600;700&display=swap');
+
+// Import centralized partials (base styles first)
+@import './variables';
+@import './typography'; 
+@import './layout';
+@import './forms';
+@import './buttons';
+
+// Import component styles (after base styles)
+@import './components/header';
+@import './components/navigation';
+@import './components/dashboard';
+@import './components/qr-display';
+@import './components/question-manager';
+@import './components/response-viewer';
+@import './components/question-display';
+
+// All base styles, typography, layout, forms, and buttons are imported above
+// Component-specific styles are also imported above
+
+// Any additional global styles or overrides can go here

@@ -1,0 +1,264 @@
+@import '../variables';
+
+// Dashboard Component Styles
+.dashboard,
+.institution-dashboard {
+  padding: $spacing-lg;
+  max-width: 1200px;
+  margin: 0 auto;
+  
+  header,
+  .dashboard-header {
+    text-align: center;
+    margin-bottom: $spacing-2xl;
+    
+    h1 {
+      color: $primary;
+      margin-bottom: $spacing-sm;
+    }
+    
+    p,
+    .welcome-message {
+      color: $text-secondary;
+      font-size: $font-size-lg;
+    }
+  }
+  
+  // Create evaluation section
+  .create-evaluation {
+    background: $background-primary;
+    padding: $spacing-lg;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-md;
+    margin-bottom: $spacing-2xl;
+    
+    h2 {
+      color: $text-primary;
+      margin-bottom: $spacing-lg;
+      text-align: center;
+    }
+    
+    form {
+      display: flex;
+      gap: $spacing-md;
+      align-items: end;
+      
+      @media (max-width: $breakpoint-sm) {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      input {
+        flex: 1;
+      }
+      
+      button {
+        white-space: nowrap;
+      }
+    }
+  }
+  
+  // Events section
+  .evaluations-section {
+    h2 {
+      color: $text-primary;
+      margin-bottom: $spacing-lg;
+    }
+    
+    .empty-state {
+      background: $background-primary;
+      padding: $spacing-2xl;
+      border-radius: $border-radius-lg;
+      text-align: center;
+      color: $text-muted;
+      border: 1px solid $border-light;
+    }
+    
+    .evaluations-list {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-lg;
+      
+      .evaluation-card {
+        background: $background-primary;
+        border: 1px solid $border-light;
+        border-radius: $border-radius-lg;
+        padding: $spacing-lg;
+        box-shadow: $shadow-sm;
+        transition: all $transition-fast;
+        
+        &:hover {
+          box-shadow: $shadow-md;
+          transform: translateY(-2px);
+        }
+        
+        .evaluation-info {
+          margin-bottom: $spacing-lg;
+          
+          h3 {
+            color: $text-primary;
+            margin-bottom: $spacing-sm;
+          }
+          
+          p {
+            color: $text-secondary;
+            margin-bottom: $spacing-md;
+          }
+          
+          .evaluation-meta {
+            display: flex;
+            gap: $spacing-md;
+            font-size: $font-size-sm;
+            
+            .access-code {
+              color: $accent;
+              font-weight: $font-weight-semibold;
+              font-family: 'Monaco', monospace;
+            }
+            
+            .questions-count {
+              color: $text-muted;
+            }
+          }
+        }
+        
+        .evaluation-actions {
+          display: flex;
+          flex-direction: column;
+          gap: $spacing-md;
+          
+          button {
+            align-self: flex-start;
+          }
+          
+          .qr-info {
+            p {
+              font-size: $font-size-sm;
+              color: $text-secondary;
+              margin-bottom: $spacing-xs;
+            }
+            
+            code {
+              display: block;
+              background: $background-tertiary;
+              padding: $spacing-sm;
+              border-radius: $border-radius;
+              font-size: $font-size-xs;
+              color: $text-primary;
+              word-break: break-all;
+              border: 1px solid $border-light;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  // Modal styles for response viewer
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: $z-modal-backdrop;
+    padding: $spacing-md;
+  }
+  
+  .modal-content {
+    background: $background-primary;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-xl;
+    max-width: 800px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: $spacing-lg;
+      border-bottom: 1px solid $border-light;
+      
+      h3 {
+        margin: 0;
+        color: $text-primary;
+      }
+      
+      button {
+        background: none;
+        border: none;
+        font-size: $font-size-xl;
+        color: $text-muted;
+        cursor: pointer;
+        padding: $spacing-xs;
+        
+        &:hover {
+          color: $text-primary;
+        }
+      }
+    }
+    
+    .responses-list {
+      padding: $spacing-lg;
+      max-height: 400px;
+      overflow-y: auto;
+      
+      .response-item {
+        background: $background-secondary;
+        border: 1px solid $border-light;
+        border-radius: $border-radius;
+        padding: $spacing-md;
+        margin-bottom: $spacing-md;
+        
+        div {
+          margin-bottom: $spacing-xs;
+          
+          strong {
+            color: $text-primary;
+            margin-right: $spacing-sm;
+          }
+        }
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+      
+      p {
+        text-align: center;
+        color: $text-muted;
+        font-style: italic;
+      }
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: $breakpoint-md) {
+  .dashboard,
+  .institution-dashboard {
+    padding: $spacing-md;
+    
+    .create-evaluation form {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .evaluations-list .evaluation-card {
+      .evaluation-meta {
+        flex-direction: column;
+        gap: $spacing-xs;
+      }
+      
+      .evaluation-actions .qr-info code {
+        font-size: $font-size-xs;
+      }
+    }
+  }
+}

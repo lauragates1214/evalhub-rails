@@ -1,0 +1,199 @@
+// QR Display Component Styles
+
+.qr-display {
+  padding: var(--spacing-lg);
+  
+  .qr-header {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: var(--spacing-lg);
+    
+    h3 {
+      color: var(--primary-color);
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .evaluation-info {
+      .evaluation-name {
+        display: block;
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: var(--spacing-xs);
+      }
+      
+      .access-code {
+        font-family: 'Courier New', monospace;
+        background: var(--bg-tertiary);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-radius: var(--border-radius);
+        color: var(--primary-color);
+        font-weight: 500;
+      }
+    }
+  }
+  
+  .qr-tabs {
+    display: flex;
+    margin-bottom: var(--spacing-lg);
+    
+    button {
+      flex: 1;
+      padding: var(--spacing-sm) var(--spacing-md);
+      border: 1px solid var(--border-medium);
+      background: var(--bg-primary);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      
+      &:first-child {
+        border-radius: var(--border-radius) 0 0 var(--border-radius);
+      }
+      
+      &:last-child {
+        border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        border-left: none;
+      }
+      
+      &.active {
+        background: var(--primary-color);
+        color: var(--text-inverse);
+        border-color: var(--primary-color);
+      }
+      
+      &:not(.active):hover {
+        background: var(--bg-tertiary);
+      }
+    }
+  }
+  
+  .qr-content {
+    .qr-section {
+      text-align: center;
+      
+      .qr-placeholder {
+        margin-bottom: var(--spacing-lg);
+        
+        .qr-code-mock {
+          width: 200px;
+          height: 200px;
+          border: 2px solid var(--border-medium);
+          border-radius: var(--border-radius);
+          margin: 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          background: var(--bg-primary);
+          
+          &.instructor {
+            border-color: var(--primary-color);
+            background: linear-gradient(45deg, var(--bg-primary) 25%, transparent 25%, transparent 75%, var(--bg-primary) 75%),
+                        linear-gradient(45deg, var(--bg-primary) 25%, var(--bg-tertiary) 25%, var(--bg-tertiary) 75%, var(--bg-primary) 75%);
+            background-size: 10px 10px;
+            background-position: 0 0, 5px 5px;
+          }
+          
+          .qr-pattern {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            background: repeating-linear-gradient(
+              0deg,
+              var(--text-primary) 0px 1px,
+              transparent 1px 3px
+            ),
+            repeating-linear-gradient(
+              90deg,
+              var(--text-primary) 0px 1px,
+              transparent 1px 3px
+            );
+            opacity: 0.3;
+          }
+          
+          .qr-center {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            background: var(--bg-primary);
+            padding: var(--spacing-sm);
+            border-radius: var(--border-radius);
+            z-index: 1;
+          }
+        }
+      }
+      
+      .qr-instruction {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        margin-bottom: var(--spacing-lg);
+      }
+      
+      .url-section {
+        display: flex;
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-lg);
+        
+        .url-input {
+          font-family: 'Courier New', monospace;
+          font-size: 0.75rem;
+          color: var(--text-muted);
+          background: var(--bg-tertiary);
+        }
+        
+        .copy-btn {
+          @extend .secondary-btn;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+  
+  .qr-footer {
+    border-top: 1px solid var(--border-light);
+    padding-top: var(--spacing-lg);
+    text-align: center;
+    
+    .note {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      
+      code {
+        background: var(--bg-tertiary);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-radius: var(--border-radius-sm);
+        font-family: 'Courier New', monospace;
+        color: var(--primary-color);
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .qr-display {
+    padding: var(--spacing-md);
+    
+    .qr-content {
+      .qr-section {
+        .qr-placeholder {
+          .qr-code-mock {
+            width: 150px;
+            height: 150px;
+            
+            .qr-center {
+              font-size: 1.5rem;
+            }
+          }
+        }
+        
+        .url-section {
+          flex-direction: column;
+        }
+      }
+    }
+  }
+}

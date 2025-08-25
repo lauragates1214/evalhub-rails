@@ -1,0 +1,73 @@
+// Header Component Styles
+
+.app-header {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  
+  .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-md) var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    h1 {
+      color: var(--primary-color);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    
+    .user-name {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    .user-role {
+      padding: var(--spacing-xs) var(--spacing-sm);
+      border-radius: var(--border-radius);
+      font-size: 0.75rem;
+      font-weight: 500;
+      
+      &.instructor {
+        background: var(--primary-color);
+        color: var(--text-inverse);
+      }
+      
+      &.student {
+        background: var(--accent-color);
+        color: var(--text-inverse);
+      }
+    }
+    
+    .institution {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    .header-content {
+      flex-direction: column;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-sm);
+    }
+    
+    .user-info {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+}

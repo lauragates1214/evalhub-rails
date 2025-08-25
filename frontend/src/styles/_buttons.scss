@@ -1,0 +1,357 @@
+@import 'variables';
+
+// Base button styles with high specificity
+.btn,
+button.btn,
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  padding: $spacing-md $spacing-lg !important;
+  border-radius: $border-radius-xl !important; // Rounded like obwob
+  border: 2px solid $secondary !important; // Thick border like obwob
+  cursor: pointer !important;
+  font-family: $font-headers !important; // Use header font like obwob
+  font-weight: $font-weight-bold !important; // Bold text
+  font-size: $font-size-base !important;
+  text-decoration: none;
+  transition: all $transition-fast !important;
+  outline: none;
+  min-width: auto !important;
+  width: auto !important;
+  
+  &:focus {
+    box-shadow: 0 0 0 3px rgba($primary, 0.3);
+  }
+  
+  &:disabled {
+    opacity: 0.6 !important;
+    cursor: not-allowed !important;
+    
+    &:hover {
+      transform: none !important;
+    }
+  }
+  
+  // Primary button (coral background like obwob's accent)
+  &--primary,
+  &.primary-btn {
+    background-color: $accent !important; 
+    color: $text-inverse !important;
+    border-color: $secondary !important;
+    
+    &:hover:not(:disabled) {
+      background-color: darken($accent, 10%) !important;
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg;
+    }
+    
+    &:active {
+      background-color: darken($accent, 15%) !important;
+      transform: translateY(0);
+    }
+  }
+  
+  // Secondary button
+  &--secondary,
+  &.secondary-btn {
+    background-color: $background-primary !important;
+    color: $text-primary !important;
+    border-color: $border-dark !important;
+    
+    &:hover:not(:disabled) {
+      background-color: $background-accent !important;
+      border-color: $primary !important;
+      color: $primary !important;
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg;
+    }
+  }
+  
+  // Success button
+  &--success,
+  &.success-btn {
+    background-color: $success-color !important;
+    color: $text-inverse !important;
+    border-color: $success-dark !important;
+    
+    &:hover:not(:disabled) {
+      background-color: $success-dark !important;
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg;
+    }
+  }
+  
+  // Danger/Error button
+  &--danger,
+  &.danger-btn {
+    background-color: $error-color !important;
+    color: $text-inverse !important;
+    border-color: $error-dark !important;
+    
+    &:hover:not(:disabled) {
+      background-color: $error-dark !important;
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg;
+    }
+  }
+  
+  // Warning button
+  &--warning,
+  &.warning-btn {
+    background-color: $warning-color !important;
+    color: $neutral-900 !important;
+    border-color: $warning-dark !important;
+    
+    &:hover:not(:disabled) {
+      background-color: $warning-dark !important;
+      color: $text-inverse !important;
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg;
+    }
+  }
+  
+  // Outline variants
+  &--outline-primary {
+    background-color: transparent !important;
+    color: $accent !important;
+    border-color: $accent !important;
+    
+    &:hover:not(:disabled) {
+      background-color: $accent !important;
+      color: $text-inverse !important;
+    }
+  }
+  
+  &--outline-secondary {
+    background-color: transparent !important;
+    color: $text-primary !important;
+    border-color: $border-dark !important;
+    
+    &:hover:not(:disabled) {
+      background-color: $text-primary !important;
+      color: $text-inverse !important;
+    }
+  }
+  
+  // Sizes
+  &--small {
+    padding: $spacing-sm $spacing-md !important;
+    font-size: $font-size-sm !important;
+    border-width: 1px !important;
+  }
+  
+  &--large {
+    padding: $spacing-lg $spacing-xl !important;
+    font-size: $font-size-lg !important;
+  }
+  
+  // Full width
+  &--block {
+    width: 100% !important;
+    display: flex !important;
+  }
+  
+  // Icon buttons
+  &--icon {
+    padding: $spacing-md !important;
+    min-width: 44px; // Accessibility minimum touch target
+    height: 44px;
+    
+    &.small {
+      padding: $spacing-sm !important;
+      min-width: 36px;
+      height: 36px;
+    }
+  }
+}
+
+// Specific styling for submit buttons (like obwob's danger variant)
+button[type="submit"],
+.submit-btn {
+  padding: $spacing-md $spacing-lg !important;
+  border-radius: $border-radius-xl !important;
+  border: 2px solid $secondary !important;
+  background-color: $accent !important; // Coral like obwob
+  color: $text-inverse !important;
+  font-family: $font-headers !important;
+  font-weight: $font-weight-bold !important;
+  font-size: $font-size-base !important;
+  cursor: pointer !important;
+  transition: all $transition-fast !important;
+  
+  &:hover:not(:disabled) {
+    background-color: darken($accent, 10%) !important;
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+  
+  &:active {
+    background-color: darken($accent, 15%) !important;
+    transform: translateY(0);
+  }
+}
+
+// Button groups
+.btn-group {
+  display: flex;
+  gap: $spacing-sm;
+  
+  .btn {
+    &:not(:last-child) {
+      margin-right: 0;
+    }
+  }
+  
+  &--attached {
+    gap: 0;
+    
+    .btn {
+      border-radius: 0 !important;
+      border-right-width: 1px !important;
+      
+      &:first-child {
+        border-radius: $border-radius-xl 0 0 $border-radius-xl !important;
+      }
+      
+      &:last-child {
+        border-radius: 0 $border-radius-xl $border-radius-xl 0 !important;
+        border-right-width: 2px !important;
+      }
+      
+      &:only-child {
+        border-radius: $border-radius-xl !important;
+        border-right-width: 2px !important;
+      }
+    }
+  }
+  
+  &--vertical {
+    flex-direction: column;
+    
+    &.attached {
+      .btn {
+        border-radius: 0 !important;
+        border-bottom-width: 1px !important;
+        
+        &:first-child {
+          border-radius: $border-radius-xl $border-radius-xl 0 0 !important;
+        }
+        
+        &:last-child {
+          border-radius: 0 0 $border-radius-xl $border-radius-xl !important;
+          border-bottom-width: 2px !important;
+        }
+        
+        &:only-child {
+          border-radius: $border-radius-xl !important;
+          border-bottom-width: 2px !important;
+        }
+      }
+    }
+  }
+}
+
+// Special button styles
+.btn-floating {
+  position: fixed;
+  bottom: $spacing-xl;
+  right: $spacing-xl;
+  width: 56px;
+  height: 56px;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  box-shadow: $shadow-lg;
+  z-index: $z-sticky;
+  
+  &:hover {
+    box-shadow: $shadow-xl;
+    transform: translateY(-2px);
+  }
+  
+  @media (max-width: $breakpoint-sm) {
+    bottom: $spacing-lg;
+    right: $spacing-lg;
+  }
+}
+
+.btn-close {
+  background: none !important;
+  border: none !important;
+  font-size: $font-size-xl;
+  color: $text-muted;
+  cursor: pointer;
+  padding: $spacing-xs !important;
+  width: auto !important;
+  height: auto !important;
+  
+  &:hover {
+    color: $text-primary;
+    background: $background-secondary !important;
+    border-radius: $border-radius !important;
+  }
+}
+
+// Loading state
+.btn--loading {
+  position: relative;
+  color: transparent !important;
+  
+  &::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-left: -10px;
+    margin-top: -10px;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Form action buttons
+.form-actions {
+  .btn {
+    margin-top: $spacing-md;
+    
+    &:not(:last-child) {
+      margin-right: $spacing-sm;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: $breakpoint-sm) {
+  .btn {
+    &--responsive {
+      width: 100% !important;
+      display: flex !important;
+    }
+  }
+  
+  .btn-group {
+    &--responsive {
+      flex-direction: column;
+      width: 100%;
+      
+      .btn {
+        width: 100%;
+        margin-bottom: $spacing-sm;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
