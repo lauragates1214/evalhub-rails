@@ -1,9 +1,19 @@
 Rails.application.routes.draw do
+  # Devise routes for API authentication
+  devise_for :users, skip: [:all]
+  
   namespace :api do
+    # Devise custom routes for API
+    devise_scope :user do
+      post 'institutions/:institution_id/users/sign_in', to: 'sessions#create'
+      delete 'users/sign_out', to: 'sessions#destroy'
+      post 'institutions/:institution_id/users', to: 'registrations#create'
+    end
+    
     # Institution management
     resources :institutions do
       # Custom authentication routes for backward compatibility
-      resources :users, only: [:show, :create] do
+      resources :users, only: [:show] do
         collection do
           post :authenticate
         end

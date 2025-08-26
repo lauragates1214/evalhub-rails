@@ -1,19 +1,7 @@
-module Authenticatable
+module AccessControllable
   extend ActiveSupport::Concern
 
-  included do
-    before_action :authenticate_user!
-  end
-
   private
-
-  def current_user
-    super
-  end
-
-  def user_authenticated?
-    user_signed_in?
-  end
 
   def require_instructor!
     return if current_user&.instructor?
@@ -100,5 +88,4 @@ module Authenticatable
     
     true
   end
-
 end

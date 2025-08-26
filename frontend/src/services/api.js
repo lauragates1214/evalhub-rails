@@ -2,7 +2,7 @@ import axios from 'axios'
 import { 
   apiBaseUrl, 
   loginRoute, 
-  ORGANIZATION_APIS,
+  INSTITUTION_APIS,
   COURSE_APIS,
   QUESTION_APIS,
   USER_APIS,
@@ -119,18 +119,18 @@ export const put = (url, data = null, config = {}) =>
 export const patch = (url, data = null, config = {}) => 
   apiRequest('patch', url, data, config)
 
-// Institution/Organization API methods
+// Institution API methods
 const getAllInstitutions = () =>
-  get(ORGANIZATION_APIS.allInstitutions())
+  get(INSTITUTION_APIS.allInstitutions())
 
 const getInstitution = (institutionId) => 
-  get(ORGANIZATION_APIS.singleInstitution(institutionId))
+  get(INSTITUTION_APIS.singleInstitution(institutionId))
 
 const createInstitution = (data) => 
-  post(ORGANIZATION_APIS.createInstitution(), data)
+  post(INSTITUTION_APIS.createInstitution(), data)
 
 const updateInstitution = (institutionId, data) => 
-  put(ORGANIZATION_APIS.updateInstitution(institutionId), data)
+  put(INSTITUTION_APIS.updateInstitution(institutionId), data)
 
 // Course API methods
 const getCourses = (institutionId) => 

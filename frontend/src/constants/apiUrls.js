@@ -1,4 +1,4 @@
-// Environment variable helper that works in both Create React App and Jest
+// Environment variable helper 
 const getEnvVar = (key, fallback) => {
   // For Create React App/Node.js/Jest environments
   if (typeof process !== 'undefined' && process.env && process.env[key]) {

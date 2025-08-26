@@ -38,7 +38,9 @@ EvalHub follows a modern full-stack architecture with clear separation of concer
 - **PostgreSQL database** for production-ready data persistence
 - **Nested resource routing** providing logical API organization
 - **Service objects** for business logic abstraction and reusability
+- **Devise authentication** for secure instructor authentication and session management
 - **UUID-based authentication** enabling anonymous student participation
+- **AccessControllable concern** for fine-grained authorization and permission checks
 
 ### Frontend (React 18)
 - **Component-based architecture** with functional components and React hooks
@@ -134,7 +136,10 @@ REACT_APP_API_URL=http://localhost:3000
 ## API Documentation
 
 ### Authentication
-The API uses UUID-based session tokens for anonymous access. No traditional user authentication required for students.
+The API uses a dual authentication approach:
+- **Devise** for instructors: Full authentication with email/password, session management, and secure access to administrative features
+- **UUID-based tokens** for students: Anonymous access without registration barriers, maintaining privacy while tracking responses
+- **AccessControllable concern**: Provides authorization helpers like `require_instructor!`, `require_course_access!`, and `ensure_same_institution!` for fine-grained permission control
 
 **Join Course (Anonymous)**
 ```

@@ -1,7 +1,10 @@
 class Api::BaseController < ApplicationController
   include ErrorHandler
-  include Authenticatable  
+  include AccessControllable  
   include ResourceFindable
+  
+  # Set up Devise authentication for API controllers
+  before_action :authenticate_user!
 
   # API-specific configurations and helpers can go here
   # This provides a clean separation between general application logic 

@@ -54,7 +54,7 @@ const InstitutionDashboard = () => {
       ]);
 
       console.log("Institution data:", institutionResponse.data)
-      setInstitution(institutionResponse.data);
+      setInstitution(institutionResponse.data.institution);
       setCourses(coursesResponse.data);
     } catch (error) {
       console.error('Failed to load dashboard data:', error);
@@ -103,8 +103,9 @@ const InstitutionDashboard = () => {
         <p>Institution Dashboard</p>
         {currentUser && (
           <div className="user-info">
-            <span>Logged in as: <strong>{currentUser.name}</strong></span>
-            <span className="user-role">({currentUser.role})</span>
+            <span>Current Instructor:
+              <br></br>
+            <strong>{currentUser.name}</strong></span>
           </div>
         )}
       </header>
