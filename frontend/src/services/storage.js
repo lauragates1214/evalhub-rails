@@ -14,10 +14,14 @@ export const getSessionToken = () => {
 
 export const setSessionToken = (token) => {
   localStorage.setItem(KEYS.SESSION_TOKEN, token);
+  // Dispatch custom event for same-tab updates
+  window.dispatchEvent(new Event('userDataUpdated'));
 };
 
 export const removeSessionToken = () => {
   localStorage.removeItem(KEYS.SESSION_TOKEN);
+  // Dispatch custom event for same-tab updates
+  window.dispatchEvent(new Event('userDataUpdated'));
 };
 
 // User data management
@@ -28,10 +32,14 @@ export const getUserData = () => {
 
 export const setUserData = (userData) => {
   localStorage.setItem(KEYS.USER_DATA, JSON.stringify(userData));
+  // Dispatch custom event for same-tab updates
+  window.dispatchEvent(new Event('userDataUpdated'));
 };
 
 export const removeUserData = () => {
   localStorage.removeItem(KEYS.USER_DATA);
+  // Dispatch custom event for same-tab updates
+  window.dispatchEvent(new Event('userDataUpdated'));
 };
 
 // Current course management
@@ -86,6 +94,8 @@ export const clearAllData = () => {
   Object.values(KEYS).forEach(key => {
     localStorage.removeItem(key);
   });
+  // Dispatch custom event for same-tab updates
+  window.dispatchEvent(new Event('userDataUpdated'));
 };
 
 // Check if user is logged in
@@ -100,11 +110,11 @@ export const getUserRole = () => {
 };
 
 // Check if user is instructor
-export const isOrganizer = () => {
+export const isInstructor = () => {
   return getUserRole() === 'instructor';
 };
 
 // Check if user is student
-export const isParticipant = () => {
+export const isStudent = () => {
   return getUserRole() === 'student';
 };

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_08_26_111813) do
+ActiveRecord::Schema[7.0].define(version: 2025_08_26_114900) do
   create_table "answers", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "course_question_id", null: false
@@ -71,7 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_26_111813) do
     t.string "role", default: "student", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "email", default: "", null: false
+    t.string "email"
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"

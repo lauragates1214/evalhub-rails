@@ -9,7 +9,7 @@ class User < ApplicationRecord
   
   validates :name, presence: true
   validates :role, presence: true
-  validates :email, uniqueness: { scope: :institution_id }, allow_nil: true
+  validates :email, uniqueness: { scope: :institution_id }, allow_nil: true, allow_blank: true
   
   enum role: { student: 'student', instructor: 'instructor' }
   

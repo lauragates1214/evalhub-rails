@@ -357,3 +357,116 @@
     }
   }
 }
+/* Loading Indicator Styles */
+.loading-indicator {
+  text-align: center;
+  padding: 2rem;
+  
+  .spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #667eea;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+  }
+  
+  p {
+    color: #666;
+    font-size: 1.1rem;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Success Popup Styles */
+.success-popup {
+  background: white;
+  border-radius: 1rem;
+  padding: 3rem 2rem;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  animation: popupFadeIn 0.3s ease;
+  
+  .success-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 3rem;
+    margin: 0 auto 1.5rem;
+    animation: checkmark 0.5s ease 0.3s forwards;
+    opacity: 0;
+  }
+  
+  h2 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+  }
+  
+  p {
+    color: #666;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+  }
+  
+  .btn {
+    min-width: 120px;
+  }
+}
+
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes checkmark {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* Disabled Form Styles */
+.form-disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  
+  input, button, .dropdown-item {
+    cursor: not-allowed !important;
+  }
+}
+
+/* Update button disabled state */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed !important;
+  background: #999 !important;
+  border-color: #999 !important;
+}
+
+/* Modal close button disabled state */
+.modal-close:disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}

@@ -1,22 +1,53 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { apiService } from '../../services/api';
+import { getUserData } from '../../services/storage';
 
 const InstitutionDashboard = () => {
   const { institutionId } = useParams();
+  const navigate = useNavigate();
   const [institution, setInstitution] = useState(null);
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newCourseName, setNewCourseName] = useState('');
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    loadDashboardData();
+    // Validate user and load data
+    validateAndLoadDashboard();
   }, [institutionId]);
 
-  const loadDashboardData = async () => {
+  const validateAndLoadDashboard = async () => {
     try {
       setLoading(true);
+      
+      // Get current user from localStorage
+      const userData = getUserData();
+      if (!userData) {
+        console.error('No user data found');
+        navigate('/');
+        return;
+      }
+      
+      setCurrentUser(userData);
+      
+      // Check if user belongs to this institution
+      const userInstitutionId = userData?.institution?.id?.toString();
+      const requestedInstitutionId = institutionId?.toString();
+      
+      if (userInstitutionId !== requestedInstitutionId) {
+        console.error(`User institution (${userInstitutionId}) doesn't match requested institution (${requestedInstitutionId})`);
+        // Redirect to the correct institution dashboard
+        if (userInstitutionId) {
+          navigate(`/instructor/${userInstitutionId}`);
+        } else {
+          navigate('/');
+        }
+        return;
+      }
+      
+      // Load dashboard data
       const [orgResponse, coursesResponse] = await Promise.all([
         apiService.getInstitution(institutionId),
         apiService.getCourses(institutionId)
@@ -26,6 +57,10 @@ const InstitutionDashboard = () => {
       setCourses(coursesResponse.data);
     } catch (error) {
       console.error('Failed to load dashboard data:', error);
+      if (error.response?.status === 401) {
+        // User is not authenticated, redirect to homepage
+        navigate('/');
+      }
     } finally {
       setLoading(false);
     }
@@ -41,7 +76,7 @@ const InstitutionDashboard = () => {
         description: `Feedback course: ${newCourseName}`
       });
       setNewCourseName('');
-      loadDashboardData();
+      validateAndLoadDashboard();
     } catch (error) {
       console.error('Failed to create course:', error);
     }
@@ -64,7 +99,13 @@ const InstitutionDashboard = () => {
     <div className="dashboard">
       <header>
         <h1>{institution?.name}</h1>
-        <p>Facilitator Dashboard</p>
+        <p>Instructor Dashboard</p>
+        {currentUser && (
+          <div className="user-info">
+            <span>Logged in as: <strong>{currentUser.name}</strong></span>
+            <span className="user-role">({currentUser.role})</span>
+          </div>
+        )}
       </header>
 
       <div className="create-course">
@@ -100,13 +141,9 @@ const InstitutionDashboard = () => {
                   </div>
                 </div>
                 <div className="course-actions">
-                  <button onClick={() => viewResponses(course)}>
-                    View Responses
-                  </button>
-                  <div className="qr-info">
-                    <p>Participant URL:</p>
-                    <code>{`${window.location.origin}/student/${institutionId}/${course.id}?access_code=${course.access_code}`}</code>
-                  </div>
+                  <button onClick={() => viewResponses(course)}>View Responses</button>
+                  <button className="secondary">Manage Questions</button>
+                  <button className="secondary">Generate QR Code</button>
                 </div>
               </div>
             ))}
@@ -115,26 +152,18 @@ const InstitutionDashboard = () => {
       </div>
 
       {selectedCourse && (
-        <div className="modal-overlay" onClick={() => setSelectedCourse(null)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <div className="modal-header">
-              <h3>Responses for {selectedCourse.name}</h3>
-              <button onClick={() => setSelectedCourse(null)}>×</button>
-            </div>
-            <div className="responses-list">
-              {selectedCourse.responses?.length > 0 ? (
-                selectedCourse.responses.map(response => (
-                  <div key={response.id} className="response-item">
-                    <div><strong>User:</strong> {response.user?.name}</div>
-                    <div><strong>Question:</strong> {response.course_question?.question?.question_text}</div>
-                    <div><strong>Answer:</strong> {response.answer_text || response.selected_options?.join(', ') || 'No answer'}</div>
-                    <div><strong>Submitted:</strong> {new Date(response.created_at).toLocaleString()}</div>
-                  </div>
-                ))
-              ) : (
-                <p>No responses yet.</p>
-              )}
-            </div>
+        <div className="modal">
+          <div className="modal-content">
+            <h2>{selectedCourse.name} - Responses</h2>
+            <button onClick={() => setSelectedCourse(null)}>Close</button>
+            {selectedCourse.responses ? (
+              <div className="responses">
+                <p>Total responses: {selectedCourse.responses.length}</p>
+                {/* Add response details here */}
+              </div>
+            ) : (
+              <p>Loading responses...</p>
+            )}
           </div>
         </div>
       )}

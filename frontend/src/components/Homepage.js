@@ -16,6 +16,10 @@ const Homepage = () => {
   const [selectedInstitution, setSelectedInstitution] = useState(null);
   const [isNewInstitution, setIsNewInstitution] = useState(false);
   
+  // Success popup state
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [successRedirectData, setSuccessRedirectData] = useState(null);
+  
   // Form data
   const [formData, setFormData] = useState({
     name: '',
@@ -84,12 +88,21 @@ const Homepage = () => {
       const sessionToken = response.data?.session_token || response.session_token;
       const user = response.data?.user || response.user;
       
-      if (sessionToken) {
-        setSessionToken(sessionToken);
+      if (sessionToken || user) {
+        // Clear any existing session data first
+        localStorage.clear();
+        
+        // Set new session data
+        if (sessionToken) {
+          setSessionToken(sessionToken);
+        }
         setUserData(user);
         
+        // Use the institution ID from the user's data to ensure we go to the correct dashboard
+        const actualInstitutionId = user?.institution?.id || institutionId;
+        
         // Navigate to instructor dashboard
-        navigate(`/instructor/${institutionId}`);
+        navigate(`/instructor/${actualInstitutionId}`);
       }
     } catch (err) {
       setError(err.message || 'Login failed. Please check your credentials.');
@@ -100,6 +113,10 @@ const Homepage = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    
+    // Prevent double submission
+    if (loading) return;
+    
     setLoading(true);
     setError('');
 
@@ -148,12 +165,30 @@ const Homepage = () => {
       const sessionToken = response.data?.session_token || response.session_token;
       const user = response.data?.user || response.user;
       
-      if (sessionToken) {
-        setSessionToken(sessionToken);
+      if (sessionToken || response.data?.user) {
+        // Clear any existing session data first to prevent conflicts
+        localStorage.clear();
+        
+        // Store new session data
+        if (sessionToken) {
+          setSessionToken(sessionToken);
+        }
         setUserData(user);
         
-        // Navigate to instructor dashboard
-        navigate(`/instructor/${institutionId}`);
+        // Get the actual institution ID from the user's data
+        const actualInstitutionId = user?.institution?.id || institutionId;
+        
+        // Store redirect data for after success popup
+        setSuccessRedirectData({
+          institutionId: actualInstitutionId,
+          sessionToken,
+          user
+        });
+        
+        // Show success popup
+        setShowSuccessPopup(true);
+        setShowModal(false);
+        resetForm();
       }
     } catch (err) {
       console.error('Registration error:', err);
@@ -182,6 +217,15 @@ const Homepage = () => {
       }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSuccessOK = () => {
+    setShowSuccessPopup(false);
+    
+    // Navigate to instructor dashboard
+    if (successRedirectData) {
+      navigate(`/instructor/${successRedirectData.institutionId}`);
     }
   };
 
@@ -299,20 +343,44 @@ const Homepage = () => {
         </div>
       </div>
 
-      {/* Modal */}
+      {/* Registration Success Popup */}
+      {showSuccessPopup && (
+        <div className="modal-overlay">
+          <div className="success-popup">
+            <div className="success-icon">✓</div>
+            <h2>Registration Successful!</h2>
+            <p>Your account has been created successfully.</p>
+            <button 
+              className="btn btn-primary"
+              onClick={handleSuccessOK}
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Login/Registration Modal */}
       {showModal && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             <div className="modal-header">
               <h2>{isLogin ? 'Instructor Login' : 'Instructor Registration'}</h2>
-              <button className="modal-close" onClick={closeModal}>×</button>
+              <button className="modal-close" onClick={closeModal} disabled={loading}>×</button>
             </div>
 
             {error && (
               <div className="error-message">{error}</div>
             )}
 
-            <form onSubmit={isLogin ? handleLogin : handleRegister}>
+            {loading && (
+              <div className="loading-indicator">
+                <div className="spinner"></div>
+                <p>{isLogin ? 'Logging in...' : 'Creating your account...'}</p>
+              </div>
+            )}
+
+            <form onSubmit={isLogin ? handleLogin : handleRegister} className={loading ? 'form-disabled' : ''}>
               {!isLogin && (
                 <div className="form-group">
                   <label htmlFor="name">Full Name *</label>
@@ -324,6 +392,7 @@ const Homepage = () => {
                     onChange={handleInputChange}
                     required={!isLogin}
                     placeholder="Enter your full name"
+                    disabled={loading}
                   />
                 </div>
               )}
@@ -338,6 +407,7 @@ const Homepage = () => {
                   onChange={handleInputChange}
                   required
                   placeholder="Enter your email"
+                  disabled={loading}
                 />
               </div>
 
@@ -351,6 +421,7 @@ const Homepage = () => {
                   onChange={handleInputChange}
                   required
                   placeholder="Enter your password"
+                  disabled={loading}
                 />
               </div>
 
@@ -368,6 +439,7 @@ const Homepage = () => {
                       required={!isLogin}
                       placeholder="Start typing your institution name..."
                       autoComplete="off"
+                      disabled={loading}
                     />
                     
                     {showDropdown && filteredInstitutions.length > 0 && (
@@ -376,7 +448,7 @@ const Homepage = () => {
                           <div 
                             key={inst.id}
                             className="dropdown-item"
-                            onClick={() => selectInstitution(inst)}
+                            onClick={() => !loading && selectInstitution(inst)}
                           >
                             {inst.name}
                           </div>
@@ -417,6 +489,7 @@ const Homepage = () => {
                       required
                       placeholder="Start typing your institution name..."
                       autoComplete="off"
+                      disabled={loading}
                     />
                     
                     {showDropdown && filteredInstitutions.length > 0 && (
@@ -425,7 +498,7 @@ const Homepage = () => {
                           <div 
                             key={inst.id}
                             className="dropdown-item"
-                            onClick={() => selectInstitution(inst)}
+                            onClick={() => !loading && selectInstitution(inst)}
                           >
                             {inst.name}
                           </div>
@@ -454,7 +527,7 @@ const Homepage = () => {
                   className="btn btn-primary"
                   disabled={loading}
                 >
-                  {loading ? 'Processing...' : (isLogin ? 'Login' : 'Register')}
+                  {loading ? (isLogin ? 'Logging in...' : 'Registering...') : (isLogin ? 'Login' : 'Register')}
                 </button>
               </div>
 
@@ -466,6 +539,7 @@ const Homepage = () => {
                       type="button"
                       className="link-btn"
                       onClick={() => setIsLogin(false)}
+                      disabled={loading}
                     >
                       Register here
                     </button>
@@ -477,6 +551,7 @@ const Homepage = () => {
                       type="button"
                       className="link-btn"
                       onClick={() => setIsLogin(true)}
+                      disabled={loading}
                     >
                       Login here
                     </button>

@@ -2,7 +2,7 @@ class Api::UsersController < Api::BaseController
   self.finder_resource_name = :user
   setup_resource_finder
 
-  skip_before_action :authenticate_request, only: [:authenticate, :create]
+  skip_before_action :authenticate_user!, only: [:authenticate, :create]
   before_action :find_resource, only: [:show]
   
   def show
@@ -22,7 +22,7 @@ class Api::UsersController < Api::BaseController
       end
       
       if user.save
-        sign_in(user)
+        # Don't sign in automatically for API - just return user data
         session_data = user_session_data(user)
         render_success("User created successfully", session_data, :created)
       else
@@ -46,7 +46,6 @@ class Api::UsersController < Api::BaseController
       user = institution.users.find_by(email: params[:email])
       
       if user && user.valid_password?(params[:password])
-        sign_in(user)
         session_data = user_session_data(user)
         render_success("Authentication successful", session_data)
       else
@@ -60,12 +59,12 @@ class Api::UsersController < Api::BaseController
         user = institution.users.create!(
           name: params[:name],
           role: params[:role] || 'student',
+          email: nil, # Explicitly set to nil for students
           password: SecureRandom.hex(16) # Random password for students
         )
       end
       
       if user && user.persisted?
-        sign_in(user)
         session_data = user_session_data(user)
         render_success("Authentication successful", session_data)
       else

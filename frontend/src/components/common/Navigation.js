@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { isLoggedIn, isOrganizer, getUserData, removeSessionToken, removeUserData } from '../../services/storage';
+import { isLoggedIn, isInstructor, getUserData, removeSessionToken, removeUserData } from '../../services/storage';
 import '../../styles/components/navigation.scss';
 
 const Navigation = () => {
@@ -24,8 +24,8 @@ const Navigation = () => {
   return (
     <nav className="app-navigation">
       <div className="nav-content">
-        {isOrganizer() ? (
-          // Organizer navigation
+        {isInstructor() ? (
+          // Instructor navigation
           <div className="nav-links">
             <button 
               className={location.pathname === `/instructor/${institutionId}` ? 'active' : ''}
@@ -40,10 +40,10 @@ const Navigation = () => {
               ❓ Questions
             </button>
             <button 
-              className={location.pathname.includes('/evaluations/new') ? 'active' : ''}
-              onClick={() => navigate(`/instructor/${institutionId}/evaluations/new`)}
+              className={location.pathname.includes('/courses/new') ? 'active' : ''}
+              onClick={() => navigate(`/instructor/${institutionId}/courses/new`)}
             >
-              ➕ New Evaluation
+              ➕ New Course
             </button>
           </div>
         ) : (

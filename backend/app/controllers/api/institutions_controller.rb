@@ -2,7 +2,7 @@ class Api::InstitutionsController < Api::BaseController
   self.finder_resource_name = :institution
   setup_resource_finder
 
-  skip_before_action :authenticate_request, only: [:index, :show, :create]
+  skip_before_action :authenticate_user!, only: [:index, :show, :create]
   before_action :find_resource, only: [:show, :update, :destroy]
   before_action :require_instructor!, except: [:index, :show, :create]
   

@@ -2,7 +2,7 @@ class Api::CoursesController < Api::BaseController
   self.finder_resource_name = :course
   setup_resource_finder
 
-  skip_before_action :authenticate_request, only: [:join]
+  skip_before_action :authenticate_user!, only: [:join]
   before_action :find_resource, only: [:show, :update, :destroy, :join, :responses]
   before_action :require_instructor!, except: [:join]
   before_action -> { require_course_access!(@resource) }, only: [:show, :responses]
