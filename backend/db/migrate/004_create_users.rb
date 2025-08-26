@@ -1,4 +1,4 @@
-class CreateUsers < ActiveRecord::Migration[6.1]
+class CreateUsers < ActiveRecord::Migration[7.0]
   def change
     create_table :users do |t|
       t.references :institution, null: false, foreign_key: true
@@ -10,6 +10,5 @@ class CreateUsers < ActiveRecord::Migration[6.1]
     end
     
     add_index :users, :session_token, unique: true
-    add_index :users, :institution_id
   end
 end

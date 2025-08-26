@@ -12,12 +12,20 @@ class Api::UsersController < Api::BaseController
   def create
     # Get institution from params for create action
     institution = Institution.find(params[:institution_id])
-    user = institution.users.build(user_params)
     
-    if user.save
-      session_data = SessionManager.create_user_session(user)
-      render_success("User created successfully", session_data, :created)
-    else
+    begin
+      user = institution.users.build(user_params)
+      
+      if user.save
+        session_data = SessionManager.create_user_session(user)
+        render_success("User created successfully", session_data, :created)
+      else
+        raise ActiveRecord::RecordInvalid.new(user)
+      end
+    rescue ArgumentError => e
+      # Handle invalid enum values
+      user = institution.users.build
+      user.errors.add(:role, "is not valid")
       raise ActiveRecord::RecordInvalid.new(user)
     end
   end

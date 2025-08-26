@@ -75,7 +75,7 @@ EvalHub follows a modern full-stack architecture with clear separation of concer
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd evalhub-django/backend
+   cd evalhub-rails/backend
    ```
 
 2. **Install Ruby dependencies**

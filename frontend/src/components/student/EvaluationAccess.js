@@ -34,7 +34,7 @@ const EvaluationAccess = () => {
   };
 
   const handleJoinEvaluation = async (e) => {
-    e.prevaluationDefault();
+    e.preventDefault();
     setLoading(true);
     setError('');
 

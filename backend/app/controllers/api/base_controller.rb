@@ -104,4 +104,9 @@ class Api::BaseController < ApplicationController
   def permitted_params
     params.require(resource_name).permit! if params[resource_name].present?
   end
+
+  # Generic find_resource method
+  def find_resource
+    @resource = send(self.class._finder_method) if self.class._finder_method
+  end
 end

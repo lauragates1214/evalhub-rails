@@ -14,7 +14,7 @@ This guide walks you through setting up the EvalHub backend Rails application.
 ### 1. Clone and Navigate
 ```bash
 git clone <repository-url>
-cd evalhub-django/backend
+cd evalhub-rails/backend
 ```
 
 ### 2. Install Dependencies

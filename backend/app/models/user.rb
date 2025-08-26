@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_many :answers, dependent: :destroy
   
   validates :name, presence: true
-  validates :role, presence: true, inclusion: { in: %w[instructor student] }
+  validates :role, presence: true
   
   before_create :generate_session_token
   

@@ -17,9 +17,9 @@ RSpec.describe Question, type: :model do
     end
 
     it 'requires question_type to be valid' do
-      question = Question.new(question_text: 'Test question?', question_type: 'invalid_type', institution: institution)
-      expect(question).not_to be_valid
-      expect(question.errors[:question_type]).to include("is not included in the list")
+      expect {
+        Question.new(question_text: 'Test question?', question_type: 'invalid_type', institution: institution)
+      }.to raise_error(ArgumentError, "'invalid_type' is not a valid question_type")
     end
 
     it 'accepts text question type' do

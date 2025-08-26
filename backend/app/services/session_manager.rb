@@ -28,7 +28,7 @@ class SessionManager
     {
       id: user.id,
       name: user.name,
-      email: user.email,
+      email: user.email || nil,
       role: user.role,
       institution: {
         id: user.institution.id,

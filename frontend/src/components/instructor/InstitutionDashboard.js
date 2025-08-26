@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import apiService from '../../services/api';
+import { apiService } from '../../services/api';
 
 const InstitutionDashboard = () => {
   const { institutionId } = useParams();
@@ -32,7 +32,7 @@ const InstitutionDashboard = () => {
   };
 
   const handleCreateEvaluation = async (e) => {
-    e.prevaluationDefault();
+    e.preventDefault();
     if (!newEvaluationName.trim()) return;
     
     try {

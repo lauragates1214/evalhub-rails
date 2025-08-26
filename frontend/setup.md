@@ -12,7 +12,7 @@ This guide walks you through setting up the EvalHub frontend React application.
 
 ### 1. Navigate to Frontend Directory
 ```bash
-cd evalhub-django/frontend
+cd evalhub-rails/frontend
 ```
 
 ### 2. Install Dependencies

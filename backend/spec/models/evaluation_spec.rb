@@ -10,10 +10,10 @@ RSpec.describe Evaluation, type: :model do
       expect(evaluation.errors[:name]).to include("can't be blank")
     end
 
-    it 'requires access_code to be present' do
+    it 'generates access_code automatically when blank' do
       evaluation = Evaluation.new(name: 'Test Evaluation', access_code: nil, institution: institution)
-      expect(evaluation).not_to be_valid
-      expect(evaluation.errors[:access_code]).to include("can't be blank")
+      expect(evaluation).to be_valid
+      expect(evaluation.access_code).to be_present
     end
 
     it 'requires access_code to be unique' do

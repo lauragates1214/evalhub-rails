@@ -1,6 +1,14 @@
 import axios from 'axios'
-import { effectiveApiBaseUrl, loginRoute } from '@constants/apiUrls'
-import { API_TIMEOUT, STORAGE_KEYS } from '@constants/environment'
+import { 
+  effectiveApiBaseUrl, 
+  loginRoute, 
+  ORGANIZATION_APIS,
+  EVENT_APIS,
+  QUESTION_APIS,
+  USER_APIS,
+  ANSWER_APIS
+} from '../constants/apiUrls'
+import { API_TIMEOUT, STORAGE_KEYS } from '../constants/environment'
 
 // create axios instance with default config
 const axiosInstance = axios.create({
@@ -78,11 +86,10 @@ export const apiRequest = async (method, url, data=null, customConfig={}) => {
       // handle validation errors 
       if (status === 422) {
         const validationErrors = error.response.data.errors || {}
-        throw {
-          type: 'VALIDATION_ERROR',
-          message: 'Validation failed',
-          errors: validationErrors
-        }
+        const validationError = new Error('Validation failed')
+        validationError.type = 'VALIDATION_ERROR'
+        validationError.errors = validationErrors
+        throw validationError
       }
 
       // handle server errors
@@ -112,10 +119,89 @@ export const put = (url, data = null, config = {}) =>
 export const patch = (url, data = null, config = {}) => 
   apiRequest('patch', url, data, config)
 
-export default {
+// Institution/Organization API methods
+const getInstitution = (institutionId) => 
+  get(ORGANIZATION_APIS.singleInstitution(institutionId))
+
+const createInstitution = (data) => 
+  post(ORGANIZATION_APIS.createInstitution(), data)
+
+const updateInstitution = (institutionId, data) => 
+  put(ORGANIZATION_APIS.updateInstitution(institutionId), data)
+
+// Evaluation API methods
+const getEvaluations = (institutionId) => 
+  get(EVENT_APIS.allEvaluations(institutionId))
+
+const getEvaluation = (institutionId, evaluationId) => 
+  get(EVENT_APIS.singleEvaluation(institutionId, evaluationId))
+
+const createEvaluation = (institutionId, data) => 
+  post(EVENT_APIS.createEvaluation(institutionId), data)
+
+const updateEvaluation = (institutionId, evaluationId, data) => 
+  put(EVENT_APIS.updateEvaluation(institutionId, evaluationId), data)
+
+const joinEvaluation = (institutionId, evaluationId, accessCode) => 
+  post(EVENT_APIS.joinEvaluation(institutionId, evaluationId), { access_code: accessCode })
+
+const getEvaluationResponses = (institutionId, evaluationId) => 
+  get(EVENT_APIS.evaluationResponses(institutionId, evaluationId))
+
+// Question API methods
+const getQuestions = (institutionId) => 
+  get(QUESTION_APIS.allQuestions(institutionId))
+
+const createQuestion = (institutionId, data) => 
+  post(QUESTION_APIS.createQuestion(institutionId), data)
+
+// User API methods
+const createUser = (institutionId, userData) => 
+  post(USER_APIS.createUser(institutionId), userData)
+
+const authenticateUser = (institutionId, email, password) => 
+  post(USER_APIS.authenticateUser(institutionId), { email, password })
+
+// Answer API methods
+const createAnswers = (institutionId, evaluationId, answers) => 
+  post(ANSWER_APIS.bulkCreateAnswers(institutionId, evaluationId), { answers })
+
+const getAnswers = (institutionId, evaluationId) => 
+  get(ANSWER_APIS.allAnswers(institutionId, evaluationId))
+
+// Create apiService object with all methods
+export const apiService = {
+  // Core request methods
   request: apiRequest,
   get,
   post,
   put,
-  patch
+  patch,
+  
+  // Institution methods
+  getInstitution,
+  createInstitution,
+  updateInstitution,
+  
+  // Evaluation methods
+  getEvaluations,
+  getEvaluation,
+  createEvaluation,
+  updateEvaluation,
+  joinEvaluation,
+  getEvaluationResponses,
+  
+  // Question methods
+  getQuestions,
+  createQuestion,
+  
+  // User methods
+  createUser,
+  authenticateUser,
+  
+  // Answer methods
+  createAnswers,
+  getAnswers
 }
+
+export default apiService

@@ -17,9 +17,9 @@ RSpec.describe User, type: :model do
     end
 
     it 'requires role to be valid' do
-      user = User.new(name: 'Test User', role: 'invalid_role', institution: institution)
-      expect(user).not_to be_valid
-      expect(user.errors[:role]).to include("is not included in the list")
+      expect {
+        User.new(name: 'Test User', role: 'invalid_role', institution: institution)
+      }.to raise_error(ArgumentError, "'invalid_role' is not a valid role")
     end
 
     it 'accepts instructor role' do

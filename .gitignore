@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+/backend/vendor/bundle
+
+# Environment variables (if using)
+.env
+.env.local
+
+# Database
+*.sqlite3
+/backend/db/*.sqlite3
+
+# Logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Build outputs
+/frontend/build
+/backend/tmp

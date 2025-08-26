@@ -5,7 +5,7 @@ class Question < ApplicationRecord
   has_many :answers, through: :evaluation_questions
   
   validates :question_text, presence: true
-  validates :question_type, presence: true, inclusion: { in: %w[text multiple_choice] }
+  validates :question_type, presence: true
   
   enum question_type: {
     text: 'text',

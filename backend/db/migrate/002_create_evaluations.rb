@@ -1,4 +1,4 @@
-class CreateEvaluations < ActiveRecord::Migration[6.1]
+class CreateEvaluations < ActiveRecord::Migration[7.0]
   def change
     create_table :evaluations do |t|
       t.references :institution, null: false, foreign_key: true
@@ -11,6 +11,5 @@ class CreateEvaluations < ActiveRecord::Migration[6.1]
     end
     
     add_index :evaluations, :access_code, unique: true
-    add_index :evaluations, :institution_id
   end
 end

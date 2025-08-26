@@ -16,7 +16,7 @@ const EvaluationCreator = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.prevaluationDefault();
+    e.preventDefault();
     setLoading(true);
     
     try {

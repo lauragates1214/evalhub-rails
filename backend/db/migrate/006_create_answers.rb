@@ -1,4 +1,4 @@
-class CreateAnswers < ActiveRecord::Migration[6.1]
+class CreateAnswers < ActiveRecord::Migration[7.0]
   def change
     create_table :answers do |t|
       t.references :user, null: false, foreign_key: true
@@ -10,6 +10,5 @@ class CreateAnswers < ActiveRecord::Migration[6.1]
     end
     
     add_index :answers, [:user_id, :evaluation_question_id], unique: true
-    add_index :answers, :evaluation_question_id
   end
 end

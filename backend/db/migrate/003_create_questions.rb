@@ -1,4 +1,4 @@
-class CreateQuestions < ActiveRecord::Migration[6.1]
+class CreateQuestions < ActiveRecord::Migration[7.0]
   def change
     create_table :questions do |t|
       t.references :institution, null: false, foreign_key: true
@@ -8,7 +8,5 @@ class CreateQuestions < ActiveRecord::Migration[6.1]
       
       t.timestamps
     end
-    
-    add_index :questions, :institution_id
   end
 end
