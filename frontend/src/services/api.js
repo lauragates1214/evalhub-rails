@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { 
-  effectiveApiBaseUrl, 
+  apiBaseUrl, 
   loginRoute, 
   ORGANIZATION_APIS,
   COURSE_APIS,
@@ -12,7 +12,7 @@ import { API_TIMEOUT, STORAGE_KEYS } from '../constants/environment'
 
 // create axios instance with default config
 const axiosInstance = axios.create({
-  baseURL: effectiveApiBaseUrl,
+  baseURL: apiBaseUrl,
   timeout: API_TIMEOUT,
   headers: {
     'Content-Type': 'application/json',

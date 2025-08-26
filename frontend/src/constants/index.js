@@ -4,7 +4,6 @@
 export {
   apiBaseUrl,
   frontendBaseUrl,
-  effectiveApiBaseUrl,
   loginRoute,
   authenticateApi,
   ORGANIZATION_APIS,
@@ -13,8 +12,8 @@ export {
   USER_APIS,
   ANSWER_APIS,
   HEALTH_API,
-  buildParticipantUrl,
-  buildFacilitatorUrl
+  buildStudentQrUrl,
+  buildInstructorQrUrl
 } from './apiUrls'
 
 // Environment configuration
