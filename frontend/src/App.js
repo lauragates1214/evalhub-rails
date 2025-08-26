@@ -5,6 +5,7 @@ import './App.css';
 // Common components
 import Header from './components/common/Header';
 import Navigation from './components/common/Navigation';
+import Homepage from './components/Homepage';
 
 // Organizer components
 import InstitutionDashboard from './components/instructor/InstitutionDashboard';
@@ -24,10 +25,7 @@ function App() {
         <div className="app-content">
           <Routes>
             {/* Home/Landing */}
-            <Route path="/" element={<div className="landing">
-              <h1>Welcome to EvalHub</h1>
-              <p>Interactive survey and feedback platform</p>
-            </div>} />
+            <Route path="/" element={<Homepage />} />
             
             {/* Organizer Routes */}
             <Route path="/instructor/:institutionId" element={<InstitutionDashboard />} />

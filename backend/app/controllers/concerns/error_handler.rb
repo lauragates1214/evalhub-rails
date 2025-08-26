@@ -56,8 +56,10 @@ module ErrorHandler
 
   def format_validation_errors(errors)
     formatted = {}
-    errors.each do |attribute, messages|
-      formatted[attribute] = Array(messages)
+    errors.each do |error|
+      attribute = error.attribute
+      formatted[attribute] ||= []
+      formatted[attribute] << error.message
     end
     formatted
   end

@@ -2,6 +2,13 @@ Rails.application.routes.draw do
   namespace :api do
     # Institution management
     resources :institutions do
+      # Custom authentication routes for backward compatibility
+      resources :users, only: [:show, :create] do
+        collection do
+          post :authenticate
+        end
+      end
+      
       # Courses nested under institutions
       resources :courses do
         member do
@@ -25,13 +32,6 @@ Rails.application.routes.draw do
         member do
           post :add_to_course
           delete :remove_from_course
-        end
-      end
-      
-      # Users nested under institutions
-      resources :users, only: [:show, :create] do
-        collection do
-          post :authenticate
         end
       end
     end

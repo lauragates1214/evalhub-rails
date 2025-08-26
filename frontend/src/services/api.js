@@ -120,6 +120,9 @@ export const patch = (url, data = null, config = {}) =>
   apiRequest('patch', url, data, config)
 
 // Institution/Organization API methods
+const getAllInstitutions = () =>
+  get(ORGANIZATION_APIS.allInstitutions())
+
 const getInstitution = (institutionId) => 
   get(ORGANIZATION_APIS.singleInstitution(institutionId))
 
@@ -179,6 +182,7 @@ export const apiService = {
   patch,
   
   // Institution methods
+  getAllInstitutions,
   getInstitution,
   createInstitution,
   updateInstitution,
