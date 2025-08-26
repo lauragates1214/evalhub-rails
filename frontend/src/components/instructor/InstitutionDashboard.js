@@ -48,12 +48,13 @@ const InstitutionDashboard = () => {
       }
       
       // Load dashboard data
-      const [orgResponse, coursesResponse] = await Promise.all([
+      const [institutionResponse, coursesResponse] = await Promise.all([
         apiService.getInstitution(institutionId),
         apiService.getCourses(institutionId)
       ]);
 
-      setInstitution(orgResponse.data);
+      console.log("Institution data:", institutionResponse.data)
+      setInstitution(institutionResponse.data);
       setCourses(coursesResponse.data);
     } catch (error) {
       console.error('Failed to load dashboard data:', error);
@@ -99,7 +100,7 @@ const InstitutionDashboard = () => {
     <div className="dashboard">
       <header>
         <h1>{institution?.name}</h1>
-        <p>Instructor Dashboard</p>
+        <p>Institution Dashboard</p>
         {currentUser && (
           <div className="user-info">
             <span>Logged in as: <strong>{currentUser.name}</strong></span>

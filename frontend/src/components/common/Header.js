@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getUserData, isLoggedIn, isOrganizer } from '../../services/storage';
+import { getUserData, isLoggedIn, isInstructor } from '../../services/storage';
 import '../../styles/components/header.scss';
 
 const Header = () => {
@@ -54,6 +54,7 @@ const Header = () => {
           <div className="user-info">
             <span className="user-name">{user?.name}</span>
             <span className={`user-role ${user?.role}`}>
+              {console.log("loading user role")}
               {isInstructor() ? '👤 Instructor' : '🎯 Student'}
             </span>
             <span className="institution">{user?.institution?.name}</span>

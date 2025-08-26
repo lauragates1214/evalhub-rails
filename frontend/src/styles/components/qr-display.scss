@@ -1,17 +1,19 @@
+@import '../variables';
+
 // QR Display Component Styles
 
 .qr-display {
-  padding: var(--spacing-lg);
+  padding: $spacing-lg;
   
   .qr-header {
     text-align: center;
-    margin-bottom: var(--spacing-lg);
-    border-bottom: 1px solid var(--border-light);
-    padding-bottom: var(--spacing-lg);
+    margin-bottom: $spacing-lg;
+    border-bottom: 1px solid $border-light;
+    padding-bottom: $spacing-lg;
     
     h3 {
-      color: var(--primary-color);
-      margin-bottom: var(--spacing-md);
+      color: $primary;
+      margin-bottom: $spacing-md;
     }
     
     .evaluation-info {
@@ -19,16 +21,16 @@
         display: block;
         font-size: 1.125rem;
         font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: var(--spacing-xs);
+        color: $text-primary;
+        margin-bottom: $spacing-xs;
       }
       
       .access-code {
         font-family: 'Courier New', monospace;
-        background: var(--bg-tertiary);
-        padding: var(--spacing-xs) var(--spacing-sm);
-        border-radius: var(--border-radius);
-        color: var(--primary-color);
+        background: $background-tertiary;
+        padding: $spacing-xs $spacing-sm;
+        border-radius: $border-radius;
+        color: $primary;
         font-weight: 500;
       }
     }
@@ -36,34 +38,34 @@
   
   .qr-tabs {
     display: flex;
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: $spacing-lg;
     
     button {
       flex: 1;
-      padding: var(--spacing-sm) var(--spacing-md);
-      border: 1px solid var(--border-medium);
-      background: var(--bg-primary);
-      color: var(--text-secondary);
+      padding: $spacing-sm $spacing-md;
+      border: 1px solid $border-medium;
+      background: $background-primary;
+      color: $text-secondary;
       cursor: pointer;
-      transition: all var(--transition-fast);
+      transition: all $transition-fast;
       
       &:first-child {
-        border-radius: var(--border-radius) 0 0 var(--border-radius);
+        border-radius: $border-radius 0 0 $border-radius;
       }
       
       &:last-child {
-        border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        border-radius: 0 $border-radius $border-radius 0;
         border-left: none;
       }
       
       &.active {
-        background: var(--primary-color);
-        color: var(--text-inverse);
-        border-color: var(--primary-color);
+        background: $primary;
+        color: $text-inverse;
+        border-color: $primary;
       }
       
       &:not(.active):hover {
-        background: var(--bg-tertiary);
+        background: $background-tertiary;
       }
     }
   }
@@ -73,24 +75,24 @@
       text-align: center;
       
       .qr-placeholder {
-        margin-bottom: var(--spacing-lg);
+        margin-bottom: $spacing-lg;
         
         .qr-code-mock {
           width: 200px;
           height: 200px;
-          border: 2px solid var(--border-medium);
-          border-radius: var(--border-radius);
+          border: 2px solid $border-medium;
+          border-radius: $border-radius;
           margin: 0 auto;
           display: flex;
           align-items: center;
           justify-content: center;
           position: relative;
-          background: var(--bg-primary);
+          background: $background-primary;
           
           &.instructor {
-            border-color: var(--primary-color);
-            background: linear-gradient(45deg, var(--bg-primary) 25%, transparent 25%, transparent 75%, var(--bg-primary) 75%),
-                        linear-gradient(45deg, var(--bg-primary) 25%, var(--bg-tertiary) 25%, var(--bg-tertiary) 75%, var(--bg-primary) 75%);
+            border-color: $primary;
+            background: linear-gradient(45deg, $background-primary 25%, transparent 25%, transparent 75%, $background-primary 75%),
+                        linear-gradient(45deg, $background-primary 25%, $background-tertiary 25%, $background-tertiary 75%, $background-primary 75%);
             background-size: 10px 10px;
             background-position: 0 0, 5px 5px;
           }
@@ -103,12 +105,12 @@
             bottom: 10px;
             background: repeating-linear-gradient(
               0deg,
-              var(--text-primary) 0px 1px,
+              $text-primary 0px 1px,
               transparent 1px 3px
             ),
             repeating-linear-gradient(
               90deg,
-              var(--text-primary) 0px 1px,
+              $text-primary 0px 1px,
               transparent 1px 3px
             );
             opacity: 0.3;
@@ -117,10 +119,10 @@
           .qr-center {
             font-size: 2rem;
             font-weight: 700;
-            color: var(--primary-color);
-            background: var(--bg-primary);
-            padding: var(--spacing-sm);
-            border-radius: var(--border-radius);
+            color: $primary;
+            background: $background-primary;
+            padding: $spacing-sm;
+            border-radius: $border-radius;
             z-index: 1;
           }
         }
@@ -128,20 +130,20 @@
       
       .qr-instruction {
         font-size: 0.875rem;
-        color: var(--text-secondary);
-        margin-bottom: var(--spacing-lg);
+        color: $text-secondary;
+        margin-bottom: $spacing-lg;
       }
       
       .url-section {
         display: flex;
-        gap: var(--spacing-sm);
-        margin-bottom: var(--spacing-lg);
+        gap: $spacing-sm;
+        margin-bottom: $spacing-lg;
         
         .url-input {
           font-family: 'Courier New', monospace;
           font-size: 0.75rem;
-          color: var(--text-muted);
-          background: var(--bg-tertiary);
+          color: $text-muted;
+          background: $background-tertiary;
         }
         
         .copy-btn {
@@ -153,20 +155,20 @@
   }
   
   .qr-footer {
-    border-top: 1px solid var(--border-light);
-    padding-top: var(--spacing-lg);
+    border-top: 1px solid $border-light;
+    padding-top: $spacing-lg;
     text-align: center;
     
     .note {
       font-size: 0.875rem;
-      color: var(--text-secondary);
+      color: $text-secondary;
       
       code {
-        background: var(--bg-tertiary);
-        padding: var(--spacing-xs) var(--spacing-sm);
-        border-radius: var(--border-radius-sm);
+        background: $background-tertiary;
+        padding: $spacing-xs $spacing-sm;
+        border-radius: $border-radius-sm;
         font-family: 'Courier New', monospace;
-        color: var(--primary-color);
+        color: $primary;
         font-weight: 500;
       }
     }
@@ -175,7 +177,7 @@
 
 @media (max-width: 768px) {
   .qr-display {
-    padding: var(--spacing-md);
+    padding: $spacing-md;
     
     .qr-content {
       .qr-section {

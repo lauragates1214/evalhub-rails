@@ -1,9 +1,11 @@
+@import '../variables';
+
 // Question Manager Component Styles
 
 .question-manager {
-  background: var(--bg-primary);
-  border-radius: var(--border-radius);
-  padding: var(--spacing-lg);
+  background: $background-primary;
+  border-radius: $border-radius;
+  padding: $spacing-lg;
   max-width: 800px;
   margin: 0 auto;
   
@@ -11,12 +13,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--spacing-lg);
-    padding-bottom: var(--spacing-md);
-    border-bottom: 1px solid var(--border-light);
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-md;
+    border-bottom: 1px solid $border-light;
     
     h3 {
-      color: var(--primary-color);
+      color: $primary;
       margin: 0;
     }
     
@@ -24,26 +26,26 @@
       background: none;
       border: none;
       font-size: 1.5rem;
-      color: var(--text-secondary);
+      color: $text-secondary;
       cursor: pointer;
-      padding: var(--spacing-xs);
-      border-radius: var(--border-radius);
+      padding: $spacing-xs;
+      border-radius: $border-radius;
       
       &:hover {
-        background: var(--bg-tertiary);
-        color: var(--text-primary);
+        background: $background-tertiary;
+        color: $text-primary;
       }
     }
   }
   
   .questions-section {
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: $spacing-xl;
     
     .section-header {
-      margin-bottom: var(--spacing-md);
+      margin-bottom: $spacing-md;
       
       h4 {
-        color: var(--text-primary);
+        color: $text-primary;
         margin: 0;
         font-weight: 600;
       }
@@ -54,90 +56,90 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        padding: var(--spacing-md);
-        border: 1px solid var(--border-medium);
-        border-radius: var(--border-radius);
-        margin-bottom: var(--spacing-sm);
-        transition: all var(--transition-fast);
+        padding: $spacing-md;
+        border: 1px solid $border-medium;
+        border-radius: $border-radius;
+        margin-bottom: $spacing-sm;
+        transition: all $transition-fast;
         
         &.in-evaluation {
-          background: var(--success-bg);
-          border-color: var(--success-color);
+          background: $success-bg;
+          border-color: $success-color;
         }
         
         &.available {
-          background: var(--bg-secondary);
-          border-color: var(--border-medium);
+          background: $background-secondary;
+          border-color: $border-medium;
           
           &:hover {
-            border-color: var(--primary-color);
-            background: var(--bg-tertiary);
+            border-color: $primary;
+            background: $background-tertiary;
           }
         }
         
         .question-content {
           flex: 1;
-          margin-right: var(--spacing-md);
+          margin-right: $spacing-md;
           
           .question-type {
             display: inline-block;
-            background: var(--primary-color);
-            color: var(--text-inverse);
-            padding: var(--spacing-xs) var(--spacing-sm);
-            border-radius: var(--border-radius-sm);
+            background: $primary;
+            color: $text-inverse;
+            padding: $spacing-xs $spacing-sm;
+            border-radius: $border-radius-sm;
             font-size: 0.75rem;
             font-weight: 500;
             text-transform: uppercase;
-            margin-bottom: var(--spacing-xs);
+            margin-bottom: $spacing-xs;
           }
           
           .question-text {
             display: block;
-            color: var(--text-primary);
+            color: $text-primary;
             font-weight: 500;
             line-height: 1.4;
           }
         }
         
         .add-btn, .remove-btn {
-          padding: var(--spacing-sm) var(--spacing-md);
-          border-radius: var(--border-radius);
+          padding: $spacing-sm $spacing-md;
+          border-radius: $border-radius;
           font-weight: 500;
           cursor: pointer;
-          transition: all var(--transition-fast);
+          transition: all $transition-fast;
           white-space: nowrap;
         }
         
         .add-btn {
-          background: var(--primary-color);
-          color: var(--text-inverse);
-          border: 1px solid var(--primary-color);
+          background: $primary;
+          color: $text-inverse;
+          border: 1px solid $primary;
           
           &:hover {
-            background: var(--primary-dark);
-            border-color: var(--primary-dark);
+            background: $primary;
+            border-color: $primary;
           }
         }
         
         .remove-btn {
-          background: var(--error-color);
-          color: var(--text-inverse);
-          border: 1px solid var(--error-color);
+          background: $error-color;
+          color: $text-inverse;
+          border: 1px solid $error-color;
           
           &:hover {
-            background: var(--error-dark);
-            border-color: var(--error-dark);
+            background: $error-dark;
+            border-color: $error-dark;
           }
         }
       }
       
       .empty-state {
         text-align: center;
-        padding: var(--spacing-xl);
-        color: var(--text-secondary);
-        background: var(--bg-secondary);
-        border-radius: var(--border-radius);
-        border: 1px solid var(--border-light);
+        padding: $spacing-xl;
+        color: $text-secondary;
+        background: $background-secondary;
+        border-radius: $border-radius;
+        border: 1px solid $border-light;
       }
     }
   }
@@ -145,18 +147,18 @@
 
 @media (max-width: 768px) {
   .question-manager {
-    padding: var(--spacing-md);
-    margin: var(--spacing-sm);
+    padding: $spacing-md;
+    margin: $spacing-sm;
     
     .questions-section {
       .questions-list {
         .question-item {
           flex-direction: column;
-          gap: var(--spacing-sm);
+          gap: $spacing-sm;
           
           .question-content {
             margin-right: 0;
-            margin-bottom: var(--spacing-sm);
+            margin-bottom: $spacing-sm;
           }
           
           .add-btn, .remove-btn {

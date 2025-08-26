@@ -1,14 +1,15 @@
 // Header Component Styles
+@import '../variables';
 
 .app-header {
-  background: var(--bg-primary);
-  border-bottom: 1px solid var(--border-light);
-  box-shadow: var(--shadow-sm);
+  background: $background-primary;
+  border-bottom: 1px solid $border-light;
+  box-shadow: $shadow-sm;
   
   .header-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: var(--spacing-md) var(--spacing-md);
+    padding: $spacing-md $spacing-md;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -16,7 +17,7 @@
   
   .logo {
     h1 {
-      color: var(--primary-color);
+      color: $primary;
       font-size: 1.5rem;
       font-weight: 700;
       margin: 0;
@@ -26,32 +27,32 @@
   .user-info {
     display: flex;
     align-items: center;
-    gap: var(--spacing-md);
+    gap: $spacing-md;
     
     .user-name {
       font-weight: 600;
-      color: var(--text-primary);
+      color: $text-primary;
     }
     
     .user-role {
-      padding: var(--spacing-xs) var(--spacing-sm);
-      border-radius: var(--border-radius);
+      padding: $spacing-xs $spacing-sm;
+      border-radius: $border-radius;
       font-size: 0.75rem;
       font-weight: 500;
       
       &.instructor {
-        background: var(--primary-color);
-        color: var(--text-inverse);
+        background: $primary;
+        color: $text-inverse;
       }
       
       &.student {
-        background: var(--accent-color);
-        color: var(--text-inverse);
+        background: $accent;
+        color: $text-inverse;
       }
     }
     
     .institution {
-      color: var(--text-secondary);
+      color: $text-secondary;
       font-size: 0.875rem;
     }
   }

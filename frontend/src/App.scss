@@ -1,4 +1,6 @@
 /* EvalHub App Styles */
+@import './styles/variables';
+
 .App {
   min-height: 100vh;
   display: flex;
@@ -20,13 +22,13 @@
 
 .landing h1 {
   font-size: 3rem;
-  color: var(--primary-color);
+  color: $primary;
   margin-bottom: 1rem;
 }
 
 .landing p {
   font-size: 1.2rem;
-  color: var(--text-secondary);
+  color: $text-secondary;
   max-width: 600px;
   margin: 0 auto;
 }
@@ -37,7 +39,7 @@
 }
 
 .not-found h2 {
-  color: var(--error-color);
+  color: $error-color;
   margin-bottom: 1rem;
 }
 
@@ -53,8 +55,8 @@
   content: '';
   width: 2rem;
   height: 2rem;
-  border: 3px solid var(--border-light);
-  border-top-color: var(--primary-color);
+  border: 3px solid $border-light;
+  border-top-color: $primary;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -67,22 +69,22 @@
 
 /* Error states */
 .error {
-  background: var(--error-light);
-  color: var(--error-dark);
+  background: $error-light;
+  color: $error-dark;
   padding: 1rem;
-  border-radius: var(--border-radius);
+  border-radius: $border-radius;
   margin: 1rem 0;
-  border-left: 4px solid var(--error-color);
+  border-left: 4px solid $error-color;
 }
 
 /* Success states */
 .success {
-  background: var(--success-light);
-  color: var(--success-dark);
+  background: $success-light;
+  color: $success-dark;
   padding: 1rem;
-  border-radius: var(--border-radius);
+  border-radius: $border-radius;
   margin: 1rem 0;
-  border-left: 4px solid var(--success-color);
+  border-left: 4px solid $success-color;
 }
 
 /* Responsive design */

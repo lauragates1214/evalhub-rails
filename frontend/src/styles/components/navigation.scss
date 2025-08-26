@@ -1,14 +1,15 @@
 // Navigation Component Styles
+@import '../variables';
 
 .app-navigation {
-  background: var(--bg-primary);
-  border-top: 1px solid var(--border-light);
+  background: $background-primary;
+  border-top: 1px solid $border-light;
   box-shadow: 0 -2px 4px rgb(0 0 0 / 0.05);
   
   .nav-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: var(--spacing-md);
+    padding: $spacing-md;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -16,52 +17,52 @@
   
   .nav-links {
     display: flex;
-    gap: var(--spacing-sm);
+    gap: $spacing-sm;
     
     button {
       background: none;
       border: none;
-      padding: var(--spacing-sm) var(--spacing-md);
-      border-radius: var(--border-radius);
-      font-size: 0.875rem;
-      color: var(--text-secondary);
+      padding: $spacing-sm $spacing-md;
+      border-radius: $border-radius;
+      font-size: $font-size-sm;
+      color: $text-secondary;
       cursor: pointer;
-      transition: all var(--transition-fast);
+      transition: all $transition-fast;
       
       &:hover {
-        background: var(--bg-tertiary);
-        color: var(--primary-color);
+        background: $background-tertiary;
+        color: $primary;
       }
       
       &.active {
-        background: var(--primary-color);
-        color: var(--text-inverse);
+        background: $primary;
+        color: $text-inverse;
       }
     }
   }
   
   .logout-btn {
-    background: var(--error-color);
-    color: var(--text-inverse);
+    background: $error-color;
+    color: $text-inverse;
     border: none;
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: var(--border-radius);
-    font-size: 0.875rem;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius;
+    font-size: $font-size-sm;
     cursor: pointer;
-    transition: background-color var(--transition-fast);
+    transition: background-color $transition-fast;
     
     &:hover {
-      background: #dc2626;
+      background: $error-dark;
     }
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-md) {
   .app-navigation {
     .nav-content {
       flex-direction: column;
-      gap: var(--spacing-md);
-      padding: var(--spacing-sm);
+      gap: $spacing-md;
+      padding: $spacing-sm;
     }
     
     .nav-links {

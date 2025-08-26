@@ -1,9 +1,11 @@
+@import '../variables';
+
 // Response Viewer Component Styles
 
 .response-viewer {
-  background: var(--bg-primary);
-  border-radius: var(--border-radius);
-  padding: var(--spacing-lg);
+  background: $background-primary;
+  border-radius: $border-radius;
+  padding: $spacing-lg;
   max-width: 1000px;
   margin: 0 auto;
   
@@ -11,18 +13,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--spacing-lg);
-    padding-bottom: var(--spacing-md);
-    border-bottom: 1px solid var(--border-light);
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-md;
+    border-bottom: 1px solid $border-light;
     
     h3 {
-      color: var(--primary-color);
+      color: $primary;
       margin: 0;
     }
     
     .header-actions {
       display: flex;
-      gap: var(--spacing-sm);
+      gap: $spacing-sm;
       
       .export-btn {
         @extend .primary-btn;
@@ -32,14 +34,14 @@
         background: none;
         border: none;
         font-size: 1.5rem;
-        color: var(--text-secondary);
+        color: $text-secondary;
         cursor: pointer;
-        padding: var(--spacing-xs);
-        border-radius: var(--border-radius);
+        padding: $spacing-xs;
+        border-radius: $border-radius;
         
         &:hover {
-          background: var(--bg-tertiary);
-          color: var(--text-primary);
+          background: $background-tertiary;
+          color: $text-primary;
         }
       }
     }
@@ -48,27 +50,27 @@
   .response-summary {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-lg);
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
     
     .summary-item {
-      background: var(--bg-secondary);
-      padding: var(--spacing-md);
-      border-radius: var(--border-radius);
+      background: $background-secondary;
+      padding: $spacing-md;
+      border-radius: $border-radius;
       text-align: center;
       
       .label {
         display: block;
         font-size: 0.875rem;
-        color: var(--text-secondary);
-        margin-bottom: var(--spacing-xs);
+        color: $text-secondary;
+        margin-bottom: $spacing-xs;
       }
       
       .value {
         display: block;
         font-size: 1.5rem;
         font-weight: 700;
-        color: var(--primary-color);
+        color: $primary;
       }
     }
   }
@@ -76,24 +78,24 @@
   .response-filters {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-lg);
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
     
     .filter-input {
-      padding: var(--spacing-sm);
-      border: 1px solid var(--border-medium);
-      border-radius: var(--border-radius);
-      background: var(--bg-primary);
-      color: var(--text-primary);
+      padding: $spacing-sm;
+      border: 1px solid $border-medium;
+      border-radius: $border-radius;
+      background: $background-primary;
+      color: $text-primary;
       
       &::placeholder {
-        color: var(--text-muted);
+        color: $text-muted;
       }
       
       &:focus {
         outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 2px var(--primary-color-alpha);
+        border-color: $primary;
+        box-shadow: 0 0 0 2px rgba($primary, 0.2);
       }
     }
   }
@@ -103,43 +105,43 @@
     overflow-y: auto;
     
     .response-item {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-light);
-      border-radius: var(--border-radius);
-      padding: var(--spacing-md);
-      margin-bottom: var(--spacing-sm);
+      background: $background-secondary;
+      border: 1px solid $border-light;
+      border-radius: $border-radius;
+      padding: $spacing-md;
+      margin-bottom: $spacing-sm;
       
       .response-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: var(--spacing-sm);
+        margin-bottom: $spacing-sm;
         
         .user-name {
           font-weight: 600;
-          color: var(--text-primary);
+          color: $text-primary;
         }
         
         .timestamp {
           font-size: 0.875rem;
-          color: var(--text-secondary);
+          color: $text-secondary;
         }
       }
       
       .response-content {
         .question-text {
           font-weight: 500;
-          color: var(--text-primary);
-          margin-bottom: var(--spacing-xs);
+          color: $text-primary;
+          margin-bottom: $spacing-xs;
           font-size: 0.9rem;
         }
         
         .answer-text {
-          color: var(--text-secondary);
-          background: var(--bg-tertiary);
-          padding: var(--spacing-sm);
-          border-radius: var(--border-radius-sm);
-          border-left: 3px solid var(--primary-color);
+          color: $text-secondary;
+          background: $background-tertiary;
+          padding: $spacing-sm;
+          border-radius: $border-radius-sm;
+          border-left: 3px solid $primary;
           font-style: italic;
         }
       }
@@ -147,23 +149,23 @@
     
     .empty-state {
       text-align: center;
-      padding: var(--spacing-xl);
-      color: var(--text-secondary);
-      background: var(--bg-secondary);
-      border-radius: var(--border-radius);
-      border: 1px solid var(--border-light);
+      padding: $spacing-xl;
+      color: $text-secondary;
+      background: $background-secondary;
+      border-radius: $border-radius;
+      border: 1px solid $border-light;
     }
   }
 }
 
 @media (max-width: 768px) {
   .response-viewer {
-    padding: var(--spacing-md);
-    margin: var(--spacing-sm);
+    padding: $spacing-md;
+    margin: $spacing-sm;
     
     .viewer-header {
       flex-direction: column;
-      gap: var(--spacing-sm);
+      gap: $spacing-sm;
       align-items: stretch;
       
       .header-actions {
@@ -173,7 +175,7 @@
     
     .response-summary {
       grid-template-columns: repeat(2, 1fr);
-      gap: var(--spacing-sm);
+      gap: $spacing-sm;
       
       .summary-item {
         .value {
@@ -191,7 +193,7 @@
         .response-header {
           flex-direction: column;
           align-items: flex-start;
-          gap: var(--spacing-xs);
+          gap: $spacing-xs;
         }
       }
     }
