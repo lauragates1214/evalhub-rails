@@ -3,7 +3,7 @@
 const KEYS = {
   SESSION_TOKEN: 'evalhub_session_token',
   USER_DATA: 'evalhub_user_data',
-  CURRENT_EVENT: 'evalhub_current_evaluation',
+  CURRENT_COURSE: 'evalhub_current_course',
   DRAFT_ANSWERS: 'evalhub_draft_answers',
 };
 
@@ -34,36 +34,36 @@ export const removeUserData = () => {
   localStorage.removeItem(KEYS.USER_DATA);
 };
 
-// Current evaluation management
-export const getCurrentEvaluation = () => {
-  const data = localStorage.getItem(KEYS.CURRENT_EVENT);
+// Current course management
+export const getCurrentCourse = () => {
+  const data = localStorage.getItem(KEYS.CURRENT_COURSE);
   return data ? JSON.parse(data) : null;
 };
 
-export const setCurrentEvaluation = (evaluationData) => {
-  localStorage.setItem(KEYS.CURRENT_EVENT, JSON.stringify(evaluationData));
+export const setCurrentCourse = (courseData) => {
+  localStorage.setItem(KEYS.CURRENT_COURSE, JSON.stringify(courseData));
 };
 
-export const removeCurrentEvaluation = () => {
-  localStorage.removeItem(KEYS.CURRENT_EVENT);
+export const removeCurrentCourse = () => {
+  localStorage.removeItem(KEYS.CURRENT_COURSE);
 };
 
 // Draft answers management (for offline capability)
-export const getDraftAnswers = (evaluationId) => {
+export const getDraftAnswers = (courseId) => {
   const allDrafts = localStorage.getItem(KEYS.DRAFT_ANSWERS);
   const drafts = allDrafts ? JSON.parse(allDrafts) : {};
-  return drafts[evaluationId] || {};
+  return drafts[courseId] || {};
 };
 
-export const setDraftAnswer = (evaluationId, questionId, answer) => {
+export const setDraftAnswer = (courseId, questionId, answer) => {
   const allDrafts = localStorage.getItem(KEYS.DRAFT_ANSWERS);
   const drafts = allDrafts ? JSON.parse(allDrafts) : {};
   
-  if (!drafts[evaluationId]) {
-    drafts[evaluationId] = {};
+  if (!drafts[courseId]) {
+    drafts[courseId] = {};
   }
   
-  drafts[evaluationId][questionId] = {
+  drafts[courseId][questionId] = {
     ...answer,
     timestamp: new Date().toISOString(),
   };
@@ -71,12 +71,12 @@ export const setDraftAnswer = (evaluationId, questionId, answer) => {
   localStorage.setItem(KEYS.DRAFT_ANSWERS, JSON.stringify(drafts));
 };
 
-export const removeDraftAnswers = (evaluationId) => {
+export const removeDraftAnswers = (courseId) => {
   const allDrafts = localStorage.getItem(KEYS.DRAFT_ANSWERS);
   const drafts = allDrafts ? JSON.parse(allDrafts) : {};
   
-  if (drafts[evaluationId]) {
-    delete drafts[evaluationId];
+  if (drafts[courseId]) {
+    delete drafts[courseId];
     localStorage.setItem(KEYS.DRAFT_ANSWERS, JSON.stringify(drafts));
   }
 };

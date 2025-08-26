@@ -51,54 +51,54 @@ composite_question = Question.find_or_create_by(
   ]
 end
 
-# Create test evaluations
-test_evaluation = Evaluation.find_or_create_by(
-  name: "Development Test Evaluation",
+# Create test courses
+test_course = Course.find_or_create_by(
+  name: "Development Test Course",
   institution: test_org
 ) do |e|
   e.date = Date.current
-  e.description = "Test evaluation for development"
+  e.description = "Test course for development"
 end
 
-workshop_evaluation = Evaluation.find_or_create_by(
+workshop_course = Course.find_or_create_by(
   name: "Sample Workshop",
   institution: test_org
 ) do |e|
   e.date = Date.current + 1.day
-  e.description = "Sample workshop evaluation"
+  e.description = "Sample workshop course"
 end
 
-# Create evaluation-question associations
-EvaluationQuestion.find_or_create_by(
-  evaluation: test_evaluation,
+# Create course-question associations
+CourseQuestion.find_or_create_by(
+  course: test_course,
   question: text_question
 )
 
-EvaluationQuestion.find_or_create_by(
-  evaluation: test_evaluation,
+CourseQuestion.find_or_create_by(
+  course: test_course,
   question: choice_question
 )
 
-EvaluationQuestion.find_or_create_by(
-  evaluation: workshop_evaluation,
+CourseQuestion.find_or_create_by(
+  course: workshop_course,
   question: composite_question
 )
 
 # Create some sample answers for testing
-eq1 = EvaluationQuestion.find_by(evaluation: test_evaluation, question: text_question)
+eq1 = CourseQuestion.find_by(course: test_course, question: text_question)
 if eq1
   Answer.find_or_create_by(
-    evaluation_question: eq1,
+    course_question: eq1,
     user: test_user
   ) do |a|
     a.answer_text = "This was a great session, very informative!"
   end
 end
 
-eq2 = EvaluationQuestion.find_by(evaluation: test_evaluation, question: choice_question)
+eq2 = CourseQuestion.find_by(course: test_course, question: choice_question)
 if eq2
   Answer.find_or_create_by(
-    evaluation_question: eq2,
+    course_question: eq2,
     user: test_user
   ) do |a|
     a.answer_text = "Good"
@@ -110,6 +110,6 @@ puts "Created:"
 puts "- #{Institution.count} institutions"
 puts "- #{User.count} users"
 puts "- #{Question.count} questions"
-puts "- #{Evaluation.count} evaluations"
-puts "- #{EvaluationQuestion.count} evaluation-question associations"
+puts "- #{Course.count} courses"
+puts "- #{CourseQuestion.count} course-question associations"
 puts "- #{Answer.count} sample answers"

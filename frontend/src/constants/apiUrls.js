@@ -42,24 +42,24 @@ export const ORGANIZATION_APIS = {
     `${effectiveApiBaseUrl}/api/institutions/${institutionId}`
 }
 
-// Evaluation API endpoints
-export const EVENT_APIS = {
-  allEvaluations: (institutionId) => 
-    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/evaluations`,
-  singleEvaluation: (institutionId, evaluationId) => 
-    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/evaluations/${evaluationId}`,
-  createEvaluation: (institutionId) =>
-    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/evaluations`,
-  updateEvaluation: (institutionId, evaluationId) =>
-    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/evaluations/${evaluationId}`,
-  deleteEvaluation: (institutionId, evaluationId) =>
-    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/evaluations/${evaluationId}`,
+// Course API endpoints
+export const COURSE_APIS = {
+  allCourses: (institutionId) => 
+    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/courses`,
+  singleCourse: (institutionId, courseId) => 
+    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/courses/${courseId}`,
+  createCourse: (institutionId) =>
+    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/courses`,
+  updateCourse: (institutionId, courseId) =>
+    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/courses/${courseId}`,
+  deleteCourse: (institutionId, courseId) =>
+    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/courses/${courseId}`,
   
   // Custom endpoints
-  joinEvaluation: (institutionId, evaluationId) =>
-    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/evaluations/${evaluationId}/join`,
-  evaluationResponses: (institutionId, evaluationId) =>
-    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/evaluations/${evaluationId}/responses`
+  joinCourse: (institutionId, courseId) =>
+    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/courses/${courseId}/join`,
+  courseResponses: (institutionId, courseId) =>
+    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/courses/${courseId}/responses`
 }
 
 // Question API endpoints
@@ -75,11 +75,11 @@ export const QUESTION_APIS = {
   deleteQuestion: (institutionId, questionId) =>
     `${effectiveApiBaseUrl}/api/institutions/${institutionId}/questions/${questionId}`,
   
-  // Question-Evaluation relationship
-  addQuestionToEvaluation: (institutionId, questionId) =>
-    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/questions/${questionId}/add_to_evaluation`,
-  removeQuestionFromEvaluation: (institutionId, questionId) =>
-    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/questions/${questionId}/remove_from_evaluation`
+  // Question-Course relationship
+  addQuestionToCourse: (institutionId, questionId) =>
+    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/questions/${questionId}/add_to_course`,
+  removeQuestionFromCourse: (institutionId, questionId) =>
+    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/questions/${questionId}/remove_from_course`
 }
 
 // User API endpoints (simplified for evalhub)
@@ -94,12 +94,12 @@ export const USER_APIS = {
 
 // Answer API endpoints
 export const ANSWER_APIS = {
-  bulkCreateAnswers: (institutionId, evaluationId) =>
-    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/evaluations/${evaluationId}/answers/bulk_create`,
-  allAnswers: (institutionId, evaluationId) =>
-    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/evaluations/${evaluationId}/answers`,
-  singleAnswer: (institutionId, evaluationId, answerId) =>
-    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/evaluations/${evaluationId}/answers/${answerId}`
+  bulkCreateAnswers: (institutionId, courseId) =>
+    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/courses/${courseId}/answers/bulk_create`,
+  allAnswers: (institutionId, courseId) =>
+    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/courses/${courseId}/answers`,
+  singleAnswer: (institutionId, courseId, answerId) =>
+    `${effectiveApiBaseUrl}/api/institutions/${institutionId}/courses/${courseId}/answers/${answerId}`
 }
 
 // Health check
@@ -109,8 +109,8 @@ export const HEALTH_API = {
 }
 
 // Helper function to build QR code URLs
-export const buildParticipantUrl = (institutionId, evaluationId, accessCode) =>
-  `${frontendBaseUrl}/student/${institutionId}/${evaluationId}?access_code=${accessCode}`
+export const buildParticipantUrl = (institutionId, courseId, accessCode) =>
+  `${frontendBaseUrl}/student/${institutionId}/${courseId}?access_code=${accessCode}`
 
-export const buildFacilitatorUrl = (institutionId, evaluationId, accessCode) =>
-  `${frontendBaseUrl}/instructor/${institutionId}/${evaluationId}?access_code=${accessCode}`
+export const buildFacilitatorUrl = (institutionId, courseId, accessCode) =>
+  `${frontendBaseUrl}/instructor/${institutionId}/${courseId}?access_code=${accessCode}`

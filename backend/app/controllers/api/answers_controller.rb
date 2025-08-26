@@ -4,18 +4,18 @@ class Api::AnswersController < Api::BaseController
 
   before_action :find_resource, only: [:show, :update, :destroy]
   before_action :setup_context_resources, except: [:show, :update, :destroy]
-  before_action :setup_evaluation_question, only: [:create, :update, :destroy]
-  before_action -> { require_evaluation_access!(@evaluation) }
+  before_action :setup_course_question, only: [:create, :update, :destroy]
+  before_action -> { require_course_access!(@course) }
   before_action -> { verify_resource_ownership!(@resource) }, only: [:update, :destroy], if: -> { @resource.present? }
   
   def index
     answers = current_user.answers
-                         .joins(:evaluation_question)
-                         .where(evaluation_questions: { evaluation: @evaluation })
-                         .includes(:evaluation_question => :question)
+                         .joins(:course_question)
+                         .where(course_questions: { course: @course })
+                         .includes(:course_question => :question)
     
     render_success("Answers retrieved successfully", {
-      evaluation: { id: @evaluation.id, name: @evaluation.name },
+      course: { id: @course.id, name: @course.name },
       answers: answers.map { |answer| answer_data(answer) }
     })
   end
@@ -26,14 +26,14 @@ class Api::AnswersController < Api::BaseController
   
   def create
     # Check if user already answered this question
-    existing_answer = current_user.answers.find_by(evaluation_question: @evaluation_question)
+    existing_answer = current_user.answers.find_by(course_question: @course_question)
     
     if existing_answer
       render_error('You have already answered this question', :conflict)
       return
     end
     
-    answer = @evaluation_question.answers.build(answer_params)
+    answer = @course_question.answers.build(answer_params)
     answer.user = current_user
     
     if answer.save
@@ -63,21 +63,21 @@ class Api::AnswersController < Api::BaseController
     
     Answer.transaction do
       answers_data.each do |answer_params|
-        evaluation_question = @evaluation.evaluation_questions.find_by(id: answer_params[:evaluation_question_id])
+        course_question = @course.course_questions.find_by(id: answer_params[:course_question_id])
         
-        unless evaluation_question
-          errors << "Evaluation question #{answer_params[:evaluation_question_id]} not found"
+        unless course_question
+          errors << "Course question #{answer_params[:course_question_id]} not found"
           next
         end
         
         # Check if user already answered
-        existing_answer = current_user.answers.find_by(evaluation_question: evaluation_question)
+        existing_answer = current_user.answers.find_by(course_question: course_question)
         if existing_answer
-          errors << "Already answered question: #{evaluation_question.question.text}"
+          errors << "Already answered question: #{course_question.question.text}"
           next
         end
         
-        answer = evaluation_question.answers.build(
+        answer = course_question.answers.build(
           user: current_user,
           answer_text: answer_params[:answer_text],
           selected_options: answer_params[:selected_options] || []
@@ -106,15 +106,15 @@ class Api::AnswersController < Api::BaseController
 
   def setup_context_resources
     @institution = Institution.find(params[:institution_id])
-    @evaluation = @institution.evaluations.find(params[:evaluation_id])
+    @course = @institution.courses.find(params[:course_id])
   end
 
-  def setup_evaluation_question
+  def setup_course_question
     if @resource
-      @evaluation_question = @resource.evaluation_question
-      @evaluation = @evaluation_question.evaluation
-    elsif params[:evaluation_question_id]
-      @evaluation_question = @evaluation.evaluation_questions.find(params[:evaluation_question_id])
+      @course_question = @resource.course_question
+      @course = @course_question.course
+    elsif params[:course_question_id]
+      @course_question = @course.course_questions.find(params[:course_question_id])
     end
   end
   
@@ -126,7 +126,7 @@ class Api::AnswersController < Api::BaseController
     {
       id: answer.id,
       user_id: answer.user_id,
-      evaluation_question_id: answer.evaluation_question_id,
+      course_question_id: answer.course_question_id,
       question: {
         id: answer.question.id,
         text: answer.question.text,

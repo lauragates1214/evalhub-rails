@@ -3,7 +3,7 @@ import {
   effectiveApiBaseUrl, 
   loginRoute, 
   ORGANIZATION_APIS,
-  EVENT_APIS,
+  COURSE_APIS,
   QUESTION_APIS,
   USER_APIS,
   ANSWER_APIS
@@ -129,24 +129,24 @@ const createInstitution = (data) =>
 const updateInstitution = (institutionId, data) => 
   put(ORGANIZATION_APIS.updateInstitution(institutionId), data)
 
-// Evaluation API methods
-const getEvaluations = (institutionId) => 
-  get(EVENT_APIS.allEvaluations(institutionId))
+// Course API methods
+const getCourses = (institutionId) => 
+  get(COURSE_APIS.allCourses(institutionId))
 
-const getEvaluation = (institutionId, evaluationId) => 
-  get(EVENT_APIS.singleEvaluation(institutionId, evaluationId))
+const getCourse = (institutionId, courseId) => 
+  get(COURSE_APIS.singleCourse(institutionId, courseId))
 
-const createEvaluation = (institutionId, data) => 
-  post(EVENT_APIS.createEvaluation(institutionId), data)
+const createCourse = (institutionId, data) => 
+  post(COURSE_APIS.createCourse(institutionId), data)
 
-const updateEvaluation = (institutionId, evaluationId, data) => 
-  put(EVENT_APIS.updateEvaluation(institutionId, evaluationId), data)
+const updateCourse = (institutionId, courseId, data) => 
+  put(COURSE_APIS.updateCourse(institutionId, courseId), data)
 
-const joinEvaluation = (institutionId, evaluationId, accessCode) => 
-  post(EVENT_APIS.joinEvaluation(institutionId, evaluationId), { access_code: accessCode })
+const joinCourse = (institutionId, courseId, accessCode) => 
+  post(COURSE_APIS.joinCourse(institutionId, courseId), { access_code: accessCode })
 
-const getEvaluationResponses = (institutionId, evaluationId) => 
-  get(EVENT_APIS.evaluationResponses(institutionId, evaluationId))
+const getCourseResponses = (institutionId, courseId) => 
+  get(COURSE_APIS.courseResponses(institutionId, courseId))
 
 // Question API methods
 const getQuestions = (institutionId) => 
@@ -163,11 +163,11 @@ const authenticateUser = (institutionId, email, password) =>
   post(USER_APIS.authenticateUser(institutionId), { email, password })
 
 // Answer API methods
-const createAnswers = (institutionId, evaluationId, answers) => 
-  post(ANSWER_APIS.bulkCreateAnswers(institutionId, evaluationId), { answers })
+const createAnswers = (institutionId, courseId, answers) => 
+  post(ANSWER_APIS.bulkCreateAnswers(institutionId, courseId), { answers })
 
-const getAnswers = (institutionId, evaluationId) => 
-  get(ANSWER_APIS.allAnswers(institutionId, evaluationId))
+const getAnswers = (institutionId, courseId) => 
+  get(ANSWER_APIS.allAnswers(institutionId, courseId))
 
 // Create apiService object with all methods
 export const apiService = {
@@ -183,13 +183,13 @@ export const apiService = {
   createInstitution,
   updateInstitution,
   
-  // Evaluation methods
-  getEvaluations,
-  getEvaluation,
-  createEvaluation,
-  updateEvaluation,
-  joinEvaluation,
-  getEvaluationResponses,
+  // Course methods
+  getCourses,
+  getCourse,
+  createCourse,
+  updateCourse,
+  joinCourse,
+  getCourseResponses,
   
   // Question methods
   getQuestions,

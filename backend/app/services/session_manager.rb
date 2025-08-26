@@ -38,13 +38,13 @@ class SessionManager
   end
   
   def self.user_permissions(user)
-    base_permissions = %w[view_evaluations submit_answers view_own_answers]
+    base_permissions = %w[view_courses submit_answers view_own_answers]
     
     if user.instructor?
       base_permissions + %w[
-        create_evaluations
-        edit_evaluations
-        delete_evaluations
+        create_courses
+        edit_courses
+        delete_courses
         create_questions
         edit_questions
         delete_questions
@@ -57,15 +57,15 @@ class SessionManager
     end
   end
   
-  def self.can_access_evaluation?(user, evaluation)
-    return false unless user && evaluation
+  def self.can_access_course?(user, course)
+    return false unless user && course
     
-    # Users can only access evaluations from their institution
-    user.institution_id == evaluation.institution_id
+    # Users can only access courses from their institution
+    user.institution_id == course.institution_id
   end
   
-  def self.can_manage_evaluation?(user, evaluation)
-    return false unless can_access_evaluation?(user, evaluation)
+  def self.can_manage_course?(user, course)
+    return false unless can_access_course?(user, course)
     
     user.instructor?
   end

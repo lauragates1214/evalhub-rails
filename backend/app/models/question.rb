@@ -1,8 +1,8 @@
 class Question < ApplicationRecord
   belongs_to :institution
-  has_many :evaluation_questions, dependent: :destroy
-  has_many :evaluations, through: :evaluation_questions
-  has_many :answers, through: :evaluation_questions
+  has_many :course_questions, dependent: :destroy
+  has_many :courses, through: :course_questions
+  has_many :answers, through: :course_questions
   
   validates :question_text, presence: true
   validates :question_type, presence: true

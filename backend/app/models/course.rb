@@ -1,8 +1,8 @@
-class Evaluation < ApplicationRecord
+class Course < ApplicationRecord
   belongs_to :institution
-  has_many :evaluation_questions, dependent: :destroy
-  has_many :questions, through: :evaluation_questions
-  has_many :answers, through: :evaluation_questions
+  has_many :course_questions, dependent: :destroy
+  has_many :questions, through: :course_questions
+  has_many :answers, through: :course_questions
   
   validates :name, presence: true
   validates :access_code, presence: true, uniqueness: true

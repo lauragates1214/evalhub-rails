@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { apiService } from '../../services/api';
-import { setCurrentEvaluation, setUserData, setSessionToken } from '../../services/storage';
+import { setCurrentCourse, setUserData, setSessionToken } from '../../services/storage';
 
-const EvaluationAccess = () => {
-  const { institutionId, evaluationId } = useParams();
+const CourseAccess = () => {
+  const { institutionId, courseId } = useParams();
   const navigate = useNavigate();
-  const [evaluation, setEvaluation] = useState(null);
+  const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loginForm, setLoginForm] = useState({
     name: '',
@@ -16,24 +16,24 @@ const EvaluationAccess = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    loadEvaluationInfo();
-  }, [institutionId, evaluationId]);
+    loadCourseInfo();
+  }, [institutionId, courseId]);
 
-  const loadEvaluationInfo = async () => {
+  const loadCourseInfo = async () => {
     try {
       const accessCode = new URLSearchParams(window.location.search).get('access_code');
-      const response = await apiService.joinEvaluation(institutionId, evaluationId, accessCode);
-      setEvaluation(response.data.data.evaluation);
-      setCurrentEvaluation(response.data.data);
+      const response = await apiService.joinCourse(institutionId, courseId, accessCode);
+      setCourse(response.data.data.course);
+      setCurrentCourse(response.data.data);
     } catch (error) {
-      console.error('Failed to load evaluation:', error);
-      setError('Evaluation not found or access denied.');
+      console.error('Failed to load course:', error);
+      setError('Course not found or access denied.');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleJoinEvaluation = async (e) => {
+  const handleJoinCourse = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
@@ -59,10 +59,10 @@ const EvaluationAccess = () => {
       setUserData(authResponse.data.data.user);
 
       // Navigate to questions
-      navigate(`/student/${institutionId}/${evaluationId}/questions`);
+      navigate(`/student/${institutionId}/${courseId}/questions`);
     } catch (error) {
-      console.error('Failed to join evaluation:', error);
-      setError('Failed to join evaluation. Please check your details and try again.');
+      console.error('Failed to join course:', error);
+      setError('Failed to join course. Please check your details and try again.');
     } finally {
       setLoading(false);
     }
@@ -75,19 +75,19 @@ const EvaluationAccess = () => {
     }));
   };
 
-  if (loading && !evaluation) {
-    return <div className="loading">Loading evaluation...</div>;
+  if (loading && !course) {
+    return <div className="loading">Loading course...</div>;
   }
 
   return (
-    <div className="evaluation-access">
-      <div className="evaluation-header">
-        <h1>Join Evaluation</h1>
-        {evaluation && (
-          <div className="evaluation-info">
-            <h2>{evaluation.name}</h2>
-            {evaluation.description && <p>{evaluation.description}</p>}
-            {evaluation.location && <p>📍 {evaluation.location}</p>}
+    <div className="course-access">
+      <div className="course-header">
+        <h1>Join Course</h1>
+        {course && (
+          <div className="course-info">
+            <h2>{course.name}</h2>
+            {course.description && <p>{course.description}</p>}
+            {course.location && <p>📍 {course.location}</p>}
           </div>
         )}
       </div>
@@ -96,7 +96,7 @@ const EvaluationAccess = () => {
         <div className="error">{error}</div>
       )}
 
-      <form onSubmit={handleJoinEvaluation} className="join-form">
+      <form onSubmit={handleJoinCourse} className="join-form">
         <div className="form-group">
           <label htmlFor="name">Your Name *</label>
           <input
@@ -131,12 +131,12 @@ const EvaluationAccess = () => {
             type="text"
             value={loginForm.access_code}
             onChange={handleChange}
-            placeholder="Enter evaluation access code (if different from URL)"
+            placeholder="Enter course access code (if different from URL)"
           />
         </div>
 
         <button type="submit" disabled={loading} className="join-btn">
-          {loading ? 'Joining...' : 'Join Evaluation 🚀'}
+          {loading ? 'Joining...' : 'Join Course 🚀'}
         </button>
       </form>
 
@@ -144,7 +144,7 @@ const EvaluationAccess = () => {
         <h3>What happens next?</h3>
         <ul>
           <li>✅ You'll be registered as a student</li>
-          <li>📋 You'll see all available questions for this evaluation</li>
+          <li>📋 You'll see all available questions for this course</li>
           <li>💬 Submit your responses at your own pace</li>
           <li>🎯 Your answers will be collected for analysis</li>
         </ul>
@@ -153,4 +153,4 @@ const EvaluationAccess = () => {
   );
 };
 
-export default EvaluationAccess;
+export default CourseAccess;

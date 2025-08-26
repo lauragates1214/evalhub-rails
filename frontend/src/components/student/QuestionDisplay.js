@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
 
-const QuestionDisplay = ({ institutionId, evaluationId }) => {
-  const [evaluation, setEvaluation] = useState(null);
+const QuestionDisplay = ({ institutionId, courseId }) => {
+  const [course, setCourse] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
   const [loading, setLoading] = useState(true);
@@ -11,17 +11,17 @@ const QuestionDisplay = ({ institutionId, evaluationId }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   useEffect(() => {
-    loadEvaluation();
-  }, [institutionId, evaluationId]);
+    loadCourse();
+  }, [institutionId, courseId]);
 
-  const loadEvaluation = async () => {
+  const loadCourse = async () => {
     try {
       setLoading(true);
-      const response = await api.getEvaluation(institutionId, evaluationId);
-      setEvaluation(response.data);
+      const response = await api.getCourse(institutionId, courseId);
+      setCourse(response.data);
       setQuestions(response.data.questions || []);
     } catch (err) {
-      setError('Failed to load evaluation questions');
+      setError('Failed to load course questions');
     } finally {
       setLoading(false);
     }
@@ -38,12 +38,12 @@ const QuestionDisplay = ({ institutionId, evaluationId }) => {
     try {
       setSubmitting(true);
       const answerData = Object.entries(answers).map(([questionId, value]) => ({
-        evaluation_question_id: parseInt(questionId),
+        course_question_id: parseInt(questionId),
         answer_text: typeof value === 'string' ? value : null,
         selected_options: Array.isArray(value) ? value : null
       }));
 
-      await api.bulkCreateAnswers(institutionId, evaluationId, { answers: answerData });
+      await api.bulkCreateAnswers(institutionId, courseId, { answers: answerData });
       alert('Responses submitted successfully!');
     } catch (err) {
       setError('Failed to submit responses');
@@ -94,12 +94,12 @@ const QuestionDisplay = ({ institutionId, evaluationId }) => {
 
   if (loading) return <div className="loading">Loading questions...</div>;
 
-  if (!evaluation || questions.length === 0) {
+  if (!course || questions.length === 0) {
     return (
       <div className="question-display">
         <div className="empty-state">
           <h3>No Questions Available</h3>
-          <p>This evaluation doesn't have any questions yet.</p>
+          <p>This course doesn't have any questions yet.</p>
         </div>
       </div>
     );
@@ -111,8 +111,8 @@ const QuestionDisplay = ({ institutionId, evaluationId }) => {
 
   return (
     <div className="question-display">
-      <div className="evaluation-header">
-        <h2>{evaluation.name}</h2>
+      <div className="course-header">
+        <h2>{course.name}</h2>
         <div className="progress-info">
           Question {currentQuestionIndex + 1} of {questions.length}
           ({answeredQuestions} answered)

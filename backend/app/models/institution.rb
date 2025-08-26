@@ -1,5 +1,5 @@
 class Institution < ApplicationRecord
-  has_many :evaluations, dependent: :destroy
+  has_many :courses, dependent: :destroy
   has_many :users, dependent: :destroy
   has_many :questions, dependent: :destroy
   

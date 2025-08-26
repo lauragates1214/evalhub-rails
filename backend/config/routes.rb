@@ -2,17 +2,17 @@ Rails.application.routes.draw do
   namespace :api do
     # Institution management
     resources :institutions do
-      # Evaluations nested under institutions
-      resources :evaluations do
+      # Courses nested under institutions
+      resources :courses do
         member do
           get :join
           get :responses
         end
         
-        # Evaluation questions (join table)
-        resources :evaluation_questions, path: 'questions'
+        # Course questions (join table)
+        resources :course_questions, path: 'questions'
         
-        # Answers for evaluation questions
+        # Answers for course questions
         resources :answers do
           collection do
             post :bulk_create
@@ -23,8 +23,8 @@ Rails.application.routes.draw do
       # Questions nested under institutions
       resources :questions do
         member do
-          post :add_to_evaluation
-          delete :remove_from_evaluation
+          post :add_to_course
+          delete :remove_from_course
         end
       end
       

@@ -45,17 +45,17 @@ export const STORAGE_KEYS = {
   SESSION_TOKEN: 'session_token',
   USER_PREFERENCES: 'user_preferences',
   ORGANIZATION_ID: 'institution_id',
-  LAST_EVENT: 'last_evaluation'
+  LAST_COURSE: 'last_course'
 }
 
 // Default Values
 export const DEFAULTS = {
   ORGANIZATION_NAME: 'My Institution',
-  EVENT_NAME: 'New Evaluation',
+  COURSE_NAME: 'New Course',
   PARTICIPANT_NAME: 'Anonymous',
   SESSION_TIMEOUT: 3600000, // 1 hour in milliseconds
-  MAX_QUESTIONS_PER_EVENT: 50,
-  MAX_PARTICIPANTS_PER_EVENT: 1000
+  MAX_QUESTIONS_PER_COURSE: 50,
+  MAX_PARTICIPANTS_PER_COURSE: 1000
 }
 
 // Validation Rules

@@ -60,27 +60,27 @@ module Authenticatable
     render_forbidden("Student or instructor access required")
   end
 
-  def can_access_evaluation?(evaluation)
-    return false unless @current_user && evaluation
-    SessionManager.can_access_evaluation?(@current_user, evaluation)
+  def can_access_course?(course)
+    return false unless @current_user && course
+    SessionManager.can_access_course?(@current_user, course)
   end
 
-  def can_manage_evaluation?(evaluation)
-    return false unless @current_user && evaluation
-    SessionManager.can_manage_evaluation?(@current_user, evaluation)
+  def can_manage_course?(course)
+    return false unless @current_user && course
+    SessionManager.can_manage_course?(@current_user, course)
   end
 
-  def require_evaluation_access!(evaluation)
-    unless can_access_evaluation?(evaluation)
-      render_forbidden("You don't have access to this evaluation")
+  def require_course_access!(course)
+    unless can_access_course?(course)
+      render_forbidden("You don't have access to this course")
       return false
     end
     true
   end
 
-  def require_evaluation_management!(evaluation)
-    unless can_manage_evaluation?(evaluation)
-      render_forbidden("You don't have permission to manage this evaluation")
+  def require_course_management!(course)
+    unless can_manage_course?(course)
+      render_forbidden("You don't have permission to manage this course")
       return false
     end
     true

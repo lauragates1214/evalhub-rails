@@ -8,12 +8,12 @@ import Navigation from './components/common/Navigation';
 
 // Organizer components
 import InstitutionDashboard from './components/instructor/InstitutionDashboard';
-import EvaluationCreator from './components/instructor/EvaluationCreator';
+import CourseCreator from './components/instructor/CourseCreator';
 import QuestionManager from './components/instructor/QuestionManager';
 import ResponseViewer from './components/instructor/ResponseViewer';
 
 // Participant components
-import EvaluationAccess from './components/student/EvaluationAccess';
+import CourseAccess from './components/student/CourseAccess';
 import QuestionDisplay from './components/student/QuestionDisplay';
 
 function App() {
@@ -31,13 +31,13 @@ function App() {
             
             {/* Organizer Routes */}
             <Route path="/instructor/:institutionId" element={<InstitutionDashboard />} />
-            <Route path="/instructor/:institutionId/evaluations/new" element={<EvaluationCreator />} />
-            <Route path="/instructor/:institutionId/evaluations/:evaluationId" element={<ResponseViewer />} />
+            <Route path="/instructor/:institutionId/courses/new" element={<CourseCreator />} />
+            <Route path="/instructor/:institutionId/courses/:courseId" element={<ResponseViewer />} />
             <Route path="/instructor/:institutionId/questions" element={<QuestionManager />} />
             
             {/* Participant Routes */}
-            <Route path="/student/:institutionId/:evaluationId" element={<EvaluationAccess />} />
-            <Route path="/student/:institutionId/:evaluationId/questions" element={<QuestionDisplay />} />
+            <Route path="/student/:institutionId/:courseId" element={<CourseAccess />} />
+            <Route path="/student/:institutionId/:courseId/questions" element={<QuestionDisplay />} />
             
             {/* 404 */}
             <Route path="*" element={<div className="not-found">

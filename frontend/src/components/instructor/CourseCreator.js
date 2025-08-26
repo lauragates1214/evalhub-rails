@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { apiService } from '../../services/api';
 
-const EvaluationCreator = () => {
+const CourseCreator = () => {
   const { institutionId } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -20,11 +20,11 @@ const EvaluationCreator = () => {
     setLoading(true);
     
     try {
-      await apiService.createEvaluation(institutionId, formData);
+      await apiService.createCourse(institutionId, formData);
       navigate(`/instructor/${institutionId}`);
     } catch (error) {
-      console.error('Failed to create evaluation:', error);
-      alert('Failed to create evaluation. Please try again.');
+      console.error('Failed to create course:', error);
+      alert('Failed to create course. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -39,12 +39,12 @@ const EvaluationCreator = () => {
   };
 
   return (
-    <div className="evaluation-creator">
-      <h1>Create New Evaluation</h1>
+    <div className="course-creator">
+      <h1>Create New Course</h1>
       
-      <form onSubmit={handleSubmit} className="evaluation-form">
+      <form onSubmit={handleSubmit} className="course-form">
         <div className="form-group">
-          <label htmlFor="name">Evaluation Name *</label>
+          <label htmlFor="name">Course Name *</label>
           <input
             id="name"
             name="name"
@@ -109,7 +109,7 @@ const EvaluationCreator = () => {
               checked={formData.active}
               onChange={handleChange}
             />
-            Activate evaluation immediately
+            Activate course immediately
           </label>
         </div>
 
@@ -118,7 +118,7 @@ const EvaluationCreator = () => {
             Cancel
           </button>
           <button type="submit" disabled={loading}>
-            {loading ? 'Creating...' : 'Create Evaluation'}
+            {loading ? 'Creating...' : 'Create Course'}
           </button>
         </div>
       </form>
@@ -126,4 +126,4 @@ const EvaluationCreator = () => {
   );
 };
 
-export default EvaluationCreator;
+export default CourseCreator;

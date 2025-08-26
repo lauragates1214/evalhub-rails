@@ -1,3 +1,3 @@
-// Student Components - For evaluation students
-export { default as EvaluationAccess } from './EvaluationAccess'
+// Student Components - For course students
+export { default as CourseAccess } from './CourseAccess'
 export { default as QuestionDisplay } from './QuestionDisplay'

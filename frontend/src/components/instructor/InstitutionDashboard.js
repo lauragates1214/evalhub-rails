@@ -5,10 +5,10 @@ import { apiService } from '../../services/api';
 const InstitutionDashboard = () => {
   const { institutionId } = useParams();
   const [institution, setInstitution] = useState(null);
-  const [evaluations, setEvaluations] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [newEvaluationName, setNewEvaluationName] = useState('');
-  const [selectedEvaluation, setSelectedEvaluation] = useState(null);
+  const [newCourseName, setNewCourseName] = useState('');
+  const [selectedCourse, setSelectedCourse] = useState(null);
 
   useEffect(() => {
     loadDashboardData();
@@ -17,13 +17,13 @@ const InstitutionDashboard = () => {
   const loadDashboardData = async () => {
     try {
       setLoading(true);
-      const [orgResponse, evaluationsResponse] = await Promise.all([
+      const [orgResponse, coursesResponse] = await Promise.all([
         apiService.getInstitution(institutionId),
-        apiService.getEvaluations(institutionId)
+        apiService.getCourses(institutionId)
       ]);
 
       setInstitution(orgResponse.data);
-      setEvaluations(evaluationsResponse.data);
+      setCourses(coursesResponse.data);
     } catch (error) {
       console.error('Failed to load dashboard data:', error);
     } finally {
@@ -31,26 +31,26 @@ const InstitutionDashboard = () => {
     }
   };
 
-  const handleCreateEvaluation = async (e) => {
+  const handleCreateCourse = async (e) => {
     e.preventDefault();
-    if (!newEvaluationName.trim()) return;
+    if (!newCourseName.trim()) return;
     
     try {
-      await apiService.createEvaluation(institutionId, {
-        name: newEvaluationName,
-        description: `Feedback evaluation: ${newEvaluationName}`
+      await apiService.createCourse(institutionId, {
+        name: newCourseName,
+        description: `Feedback course: ${newCourseName}`
       });
-      setNewEvaluationName('');
+      setNewCourseName('');
       loadDashboardData();
     } catch (error) {
-      console.error('Failed to create evaluation:', error);
+      console.error('Failed to create course:', error);
     }
   };
 
-  const viewResponses = async (evaluation) => {
+  const viewResponses = async (course) => {
     try {
-      const response = await apiService.getEvaluationResponses(institutionId, evaluation.id);
-      setSelectedEvaluation({ ...evaluation, responses: response.data });
+      const response = await apiService.getCourseResponses(institutionId, course.id);
+      setSelectedCourse({ ...course, responses: response.data });
     } catch (error) {
       console.error('Failed to load responses:', error);
     }
@@ -67,45 +67,45 @@ const InstitutionDashboard = () => {
         <p>Facilitator Dashboard</p>
       </header>
 
-      <div className="create-evaluation">
-        <h2>Create New Evaluation</h2>
-        <form onSubmit={handleCreateEvaluation}>
+      <div className="create-course">
+        <h2>Create New Course</h2>
+        <form onSubmit={handleCreateCourse}>
           <input
             type="text"
-            value={newEvaluationName}
-            onChange={(e) => setNewEvaluationName(e.target.value)}
-            placeholder="Enter evaluation name..."
+            value={newCourseName}
+            onChange={(e) => setNewCourseName(e.target.value)}
+            placeholder="Enter course name..."
             required
           />
-          <button type="submit">Create Evaluation</button>
+          <button type="submit">Create Course</button>
         </form>
       </div>
 
-      <div className="evaluations-section">
-        <h2>Your Evaluations ({evaluations.length})</h2>
-        {evaluations.length === 0 ? (
+      <div className="courses-section">
+        <h2>Your Courses ({courses.length})</h2>
+        {courses.length === 0 ? (
           <div className="empty-state">
-            <p>No evaluations created yet. Create your first evaluation to get started!</p>
+            <p>No courses created yet. Create your first course to get started!</p>
           </div>
         ) : (
-          <div className="evaluations-list">
-            {evaluations.map(evaluation => (
-              <div key={evaluation.id} className="evaluation-card">
-                <div className="evaluation-info">
-                  <h3>{evaluation.name}</h3>
-                  <p>{evaluation.description}</p>
-                  <div className="evaluation-meta">
-                    <span className="access-code">Access Code: {evaluation.access_code}</span>
-                    <span className="questions-count">{evaluation.questions?.length || 0} questions</span>
+          <div className="courses-list">
+            {courses.map(course => (
+              <div key={course.id} className="course-card">
+                <div className="course-info">
+                  <h3>{course.name}</h3>
+                  <p>{course.description}</p>
+                  <div className="course-meta">
+                    <span className="access-code">Access Code: {course.access_code}</span>
+                    <span className="questions-count">{course.questions?.length || 0} questions</span>
                   </div>
                 </div>
-                <div className="evaluation-actions">
-                  <button onClick={() => viewResponses(evaluation)}>
+                <div className="course-actions">
+                  <button onClick={() => viewResponses(course)}>
                     View Responses
                   </button>
                   <div className="qr-info">
                     <p>Participant URL:</p>
-                    <code>{`${window.location.origin}/student/${institutionId}/${evaluation.id}?access_code=${evaluation.access_code}`}</code>
+                    <code>{`${window.location.origin}/student/${institutionId}/${course.id}?access_code=${course.access_code}`}</code>
                   </div>
                 </div>
               </div>
@@ -114,19 +114,19 @@ const InstitutionDashboard = () => {
         )}
       </div>
 
-      {selectedEvaluation && (
-        <div className="modal-overlay" onClick={() => setSelectedEvaluation(null)}>
+      {selectedCourse && (
+        <div className="modal-overlay" onClick={() => setSelectedCourse(null)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             <div className="modal-header">
-              <h3>Responses for {selectedEvaluation.name}</h3>
-              <button onClick={() => setSelectedEvaluation(null)}>×</button>
+              <h3>Responses for {selectedCourse.name}</h3>
+              <button onClick={() => setSelectedCourse(null)}>×</button>
             </div>
             <div className="responses-list">
-              {selectedEvaluation.responses?.length > 0 ? (
-                selectedEvaluation.responses.map(response => (
+              {selectedCourse.responses?.length > 0 ? (
+                selectedCourse.responses.map(response => (
                   <div key={response.id} className="response-item">
                     <div><strong>User:</strong> {response.user?.name}</div>
-                    <div><strong>Question:</strong> {response.evaluation_question?.question?.question_text}</div>
+                    <div><strong>Question:</strong> {response.course_question?.question?.question_text}</div>
                     <div><strong>Answer:</strong> {response.answer_text || response.selected_options?.join(', ') || 'No answer'}</div>
                     <div><strong>Submitted:</strong> {new Date(response.created_at).toLocaleString()}</div>
                   </div>

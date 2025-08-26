@@ -1,12 +1,12 @@
-class EvaluationQuestion < ApplicationRecord
-  belongs_to :evaluation
+class CourseQuestion < ApplicationRecord
+  belongs_to :course
   belongs_to :question
   has_many :answers, dependent: :destroy
   
-  validates :evaluation, presence: true
+  validates :course, presence: true
   validates :question, presence: true
   validates :position, presence: true, numericality: { greater_than: 0 }
-  validates :evaluation_id, uniqueness: { scope: :question_id }
+  validates :course_id, uniqueness: { scope: :question_id }
   
   scope :ordered, -> { order(:position) }
   
@@ -15,9 +15,9 @@ class EvaluationQuestion < ApplicationRecord
   end
   
   def completion_rate
-    return 0 unless evaluation.total_students > 0
+    return 0 unless course.total_students > 0
     
-    (response_count.to_f / evaluation.total_students * 100).round(1)
+    (response_count.to_f / course.total_students * 100).round(1)
   end
   
   def all_responses

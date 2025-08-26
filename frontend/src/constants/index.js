@@ -8,7 +8,7 @@ export {
   loginRoute,
   authenticateApi,
   ORGANIZATION_APIS,
-  EVENT_APIS,
+  COURSE_APIS,
   QUESTION_APIS,
   USER_APIS,
   ANSWER_APIS,

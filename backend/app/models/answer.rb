@@ -1,20 +1,20 @@
 class Answer < ApplicationRecord
   belongs_to :user
-  belongs_to :evaluation_question
+  belongs_to :course_question
   
   validates :user, presence: true
-  validates :evaluation_question, presence: true
-  validates :user_id, uniqueness: { scope: :evaluation_question_id }
+  validates :course_question, presence: true
+  validates :user_id, uniqueness: { scope: :course_question_id }
   
   validate :answer_presence
   validate :answer_format_matches_question_type
   
   def question
-    evaluation_question.question
+    course_question.question
   end
   
-  def evaluation
-    evaluation_question.evaluation
+  def course
+    course_question.course
   end
   
   def answer_data
